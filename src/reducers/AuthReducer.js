@@ -23,6 +23,18 @@ export default (state = INITIAL_STATE, action) => {
          },
          error: null
        };
+    case SIGNIN_USER_SUCCESS:
+      return {
+         user: {
+           email: action.payload.email,
+           uid: action.payload.uid
+         },
+         error: null
+       };
+    case SIGNIN_USER_FAIL:
+      return {
+        error: action.payload.error
+      }
     default:
       return state;
   }
