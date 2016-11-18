@@ -45,7 +45,7 @@ function createUserRef(email, firstName, lastName) {
      email: email,
      firstName: firstName,
      lastName: lastName,
-     creadit: 0
+     credit: 0
    });
 };
 
