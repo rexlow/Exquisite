@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
   Alert,
+  Image,
   View,
   Text,
   TouchableOpacity,
@@ -76,61 +77,63 @@ class SignIn extends Component {
 
   render() {
     const {
-      skeleton, centerEverything, container, upperContainer, title, middleContainer, welcomeTitle,
+      skeleton, centerEverything, container, backgroundImage, upperContainer, title, middleContainer, welcomeTitle,
       forgotPasswordContainer, forgotPassword, inputContainer, bottomContainer, bottomText,
       redText, errorText, buttonStyle
     } = styles;
 
     return(
       <TouchableWithoutFeedback onPress={()=> dismissKeyboard()}>
-        <View style={[container]}>
-          <View style={[upperContainer, centerEverything]}>
-            <Text style={title}>EXQUISITE</Text>
-          </View>
-
-          <View style={[middleContainer, centerEverything]}>
-            <Text style={welcomeTitle}>WELCOME</Text>
-            <View style={[centerEverything], {paddingBottom: 30}}>
-              <View style={{ paddingBottom: 3 }}>
-                <Input
-                  label="email"
-                  placeholder="Email"
-                  onChangeText={(email) => this.setState({ email })}
-                  value={this.state.email}/>
-              </View>
-              <View>
-                <Input
-                  label="password"
-                  placeholder="Password"
-                  onChangeText={(password) => this.setState({ password })}
-                  value={this.state.password}
-                  secureTextEntry={true} />
-              </View>
-              <View style={forgotPasswordContainer}>
-                <TouchableOpacity onPress={() => Actions.resetPassword()}>
-                  <Text style={forgotPassword}>Forgot password?</Text>
-                </TouchableOpacity>
-              </View>
+        <Image source={require('./../../components/Gradient.jpg')} style={styles.backgroundImage}>
+          <View style={[container]}>
+            <View style={[upperContainer, centerEverything]}>
+              <Text style={title}>EXQUISITE</Text>
             </View>
 
-            <ButtonComponent
-              style={buttonStyle}
-              type='primary'
-              shape='rectangle'
-              buttonState={this.state.buttonState}
-              states={this.buttonStates}
-            />
+            <View style={[middleContainer, centerEverything]}>
+              <Text style={welcomeTitle}>WELCOME</Text>
+              <View style={[centerEverything], {paddingBottom: 30}}>
+                <View style={{ paddingBottom: 3 }}>
+                  <Input
+                    label="email"
+                    placeholder="Email"
+                    onChangeText={(email) => this.setState({ email })}
+                    value={this.state.email}/>
+                </View>
+                <View>
+                  <Input
+                    label="password"
+                    placeholder="Password"
+                    onChangeText={(password) => this.setState({ password })}
+                    value={this.state.password}
+                    secureTextEntry={true} />
+                </View>
+                <View style={forgotPasswordContainer}>
+                  <TouchableOpacity onPress={() => Actions.resetPassword()}>
+                    <Text style={forgotPassword}>Forgot password?</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
 
-            <Text style={[forgotPassword, errorText]}>{this.state.error}</Text>
-          </View>
+              <ButtonComponent
+                style={buttonStyle}
+                type='primary'
+                shape='rectangle'
+                buttonState={this.state.buttonState}
+                states={this.buttonStates}
+              />
 
-          <View style={[bottomContainer, centerEverything]}>
-            <Text style={bottomText}>Don't have an account?</Text>
-            <TouchableOpacity onPress={() => Actions.signup()}>
-              <Text style={[bottomText], redText}>Create new account</Text>
-            </TouchableOpacity>
+              <Text style={[forgotPassword, errorText]}>{this.state.error}</Text>
+            </View>
+
+            <View style={[bottomContainer, centerEverything]}>
+              <Text style={bottomText}>Don't have an account?</Text>
+              <TouchableOpacity onPress={() => Actions.signup()}>
+                <Text style={[bottomText], redText}>Create new account</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
+        </Image>
       </TouchableWithoutFeedback>
     )
   }
@@ -150,47 +153,57 @@ const styles = {
   },
   container: {
     flex: 1,
-    backgroundColor: '#F5F6F7',
+    // backgroundColor: '#F5F6F7',
+  },
+  backgroundImage: {
+    flex: 1,
+    width: null,
+    height: null,
+    resizeMode: 'cover',
   },
   upperContainer: {
     flex: 2,
+    backgroundColor: 'transparent'
   },
   middleContainer: {
     flex: 7,
   },
   bottomContainer: {
     flex: 1,
+    backgroundColor: 'transparent'
   },
   title: {
-    color: '#5B5A5A',
+    color: 'white',
     fontSize: 32,
     letterSpacing: 7,
     fontWeight: '400',
     paddingTop: 100
   },
   welcomeTitle: {
-    color: '#5B5A5A',
+    color: 'white',
     fontSize: 23,
     letterSpacing: 4,
     fontWeight: '400',
-    paddingBottom: 30
+    paddingBottom: 30,
+    backgroundColor: 'transparent'
   },
   forgotPasswordContainer: {
     alignItems: 'flex-end',
-    paddingTop: 5
+    paddingTop: 5,
+    backgroundColor: 'transparent'
   },
   forgotPassword: {
-    color: '#5B5A5A',
+    color: 'white',
     fontFamily: 'HelveticaNeue-Medium',
     fontWeight: '400'
   },
   bottomText: {
-    color: '#5B5A5A',
+    color: 'white',
     fontSize: 14,
     fontWeight: '300',
   },
   redText: {
-    color: '#FF7260'
+    color: 'white'
   },
   errorText: {
     paddingTop: 10,

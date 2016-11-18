@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import {
   Alert,
+  Image,
   View,
   Text,
   TouchableHighlight,
@@ -79,62 +80,64 @@ class SignUp extends Component {
   render() {
 
     const {
-      helvMedium, centerEverything, container, upperContainer, title, middleContainer,
+      helvMedium, centerEverything, container, backgroundImage, upperContainer, title, middleContainer,
       inputContainer, bottomContainer, terms, termsText, buttonStyle, exitFont
     } = styles;
 
     return(
       <TouchableWithoutFeedback onPress={()=> dismissKeyboard()}>
-        <View style={[container]}>
+        <Image source={require('./../../components/Gradient.jpg')} style={styles.backgroundImage}>
+          <View style={[container]}>
 
-          <View style={[upperContainer, centerEverything]}>
-            <View style={[centerEverything, { paddingTop: 50 }]}>
-              <Text style={title}>CREATE NEW</Text>
-              <Text style={title}>ACCOUNT</Text>
-            </View>
-          </View>
-          <View style={[middleContainer, centerEverything]}>
-            <View style={[centerEverything]}>
-              <Input
-                placeholder="First Name"
-                onChangeText={(firstName) => this.setState({ firstName })}
-                value={this.state.firstName} />
-              <Input
-                placeholder="Last Name"
-                onChangeText={(lastName) => this.setState({ lastName })}
-                value={this.state.lastName} />
-              <Input
-                placeholder="Email Address"
-                onChangeText={(email) => this.setState({ email })}
-                value={this.state.email} />
-              <Input
-                placeholder="Password"
-                onChangeText={(password) => this.setState({ password })}
-                value={this.state.password}
-                secureTextEntry />
-              <View style={[terms, centerEverything]}>
-                <Text style={termsText}>By tapping "Sign Up" you agree</Text>
-                <Text style={termsText}>to the terms & conditions</Text>
+            <View style={[upperContainer, centerEverything]}>
+              <View style={[centerEverything, { paddingTop: 50 }]}>
+                <Text style={title}>CREATE NEW</Text>
+                <Text style={title}>ACCOUNT</Text>
               </View>
             </View>
+            <View style={[middleContainer, centerEverything]}>
+              <View style={[centerEverything]}>
+                <Input
+                  placeholder="First Name"
+                  onChangeText={(firstName) => this.setState({ firstName })}
+                  value={this.state.firstName} />
+                <Input
+                  placeholder="Last Name"
+                  onChangeText={(lastName) => this.setState({ lastName })}
+                  value={this.state.lastName} />
+                <Input
+                  placeholder="Email Address"
+                  onChangeText={(email) => this.setState({ email })}
+                  value={this.state.email} />
+                <Input
+                  placeholder="Password"
+                  onChangeText={(password) => this.setState({ password })}
+                  value={this.state.password}
+                  secureTextEntry />
+                <View style={[terms, centerEverything]}>
+                  <Text style={termsText}>By tapping "Sign Up" you agree</Text>
+                  <Text style={termsText}>to the terms & conditions</Text>
+                </View>
+              </View>
+            </View>
+            <View style={[bottomContainer, centerEverything]}>
+              <ButtonComponent
+                style={buttonStyle}
+                type='primary'
+                shape='reactangle'
+                buttonState={this.state.buttonState}
+                states={this.buttonStates}
+              />
+              <ButtonComponent
+                style={buttonStyle}
+                type='primary'
+                shape='reactangle'
+                text="GO BACK"
+                onPress={() => Actions.pop()}
+              />
+            </View>
           </View>
-          <View style={[bottomContainer, centerEverything]}>
-            <ButtonComponent
-              style={buttonStyle}
-              type='primary'
-              shape='reactangle'
-              buttonState={this.state.buttonState}
-              states={this.buttonStates}
-            />
-            <ButtonComponent
-              style={buttonStyle}
-              type='primary'
-              shape='reactangle'
-              text="GO BACK"
-              onPress={() => Actions.pop()}
-            />
-          </View>
-        </View>
+        </Image>
       </TouchableWithoutFeedback>
     )
   }
@@ -150,10 +153,17 @@ const styles = {
   },
   container: {
     flex: 1,
-    backgroundColor: '#F5F6F7',
+    // backgroundColor: '#F5F6F7',
+  },
+  backgroundImage: {
+    flex: 1,
+    width: null,
+    height: null,
+    resizeMode: 'cover',
   },
   upperContainer: {
     flex: 2,
+    backgroundColor: 'transparent'
   },
   middleContainer: {
     flex: 5,
@@ -162,16 +172,17 @@ const styles = {
     flex: 3,
   },
   title: {
-    color: '#5B5A5A',
+    color: 'white',
     fontSize: 20,
     letterSpacing: 5,
     fontWeight: '400',
   },
   terms: {
-    paddingTop: 10
+    paddingTop: 10,
+    backgroundColor: 'transparent'
   },
   termsText: {
-    color: '#5B5A5A',
+    color: 'white',
     fontFamily: 'HelveticaNeue-Medium',
     fontWeight: '400'
   },

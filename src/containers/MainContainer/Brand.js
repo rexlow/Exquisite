@@ -4,14 +4,14 @@ import {
   Text
 } from 'react-native';
 
-class Home extends Component {
+class Brand extends Component {
 
   render() {
     console.log('home');
     const { centerEverything, container } = styles;
     return(
       <View style={[centerEverything, container]}>
-        <Text>Home</Text>
+        <Text>Brand</Text>
       </View>
     )
   }
@@ -27,4 +27,4 @@ const styles = {
   }
 }
 
-export default Home;
+export default Brand;

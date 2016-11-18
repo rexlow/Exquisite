@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
   View,
+  Text,
   StatusBar
 } from 'react-native';
 
@@ -14,6 +15,16 @@ import SplashScreen from './components/SplashScreen';
 import SignIn from './containers/AuthContainer/Signin';
 import SignUp from './containers/AuthContainer/Signup';
 import Home from './containers/MainContainer/Home';
+import Brand from './containers/MainContainer/Brand';
+
+const TabIcon = ({ selected, title}) => {
+  return(
+    <Text style={{
+        color: '#5B5A5A',
+        fontWeight: selected ? '600' : '200'
+    }}>{title}</Text>
+  );
+};
 
 class RouterComponent extends Component {
 
@@ -22,7 +33,7 @@ class RouterComponent extends Component {
   }
 
   render() {
-    const { skeleton, container, sceneStyle, navigationBarStyle, titleStyle } = styles;
+    const { skeleton, container, sceneStyle, navigationBarStyle, titleStyle, tabBarStyle } = styles;
     return(
       <View style={[container]}>
         <StatusBar
@@ -40,7 +51,10 @@ class RouterComponent extends Component {
             <Scene key="signup" component={SignUp} />
           </Scene>
           <Scene key="main" hideNavBar>
-            <Scene key="home" component={Home} />
+            <Scene key="tabbar" tabs tabBarStyle={tabBarStyle} >
+              <Scene key="home" title="Home" component={Home} icon={TabIcon} />
+              <Scene key="brand" title="Brand" component={Brand} icon={TabIcon} />
+            </Scene>
           </Scene>
         </Router>
       </View>
