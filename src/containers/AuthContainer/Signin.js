@@ -49,7 +49,6 @@ class SignIn extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
     this.processAuth(nextProps);
   }
 
@@ -208,7 +207,6 @@ const styles = {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     auth: state.auth
   };

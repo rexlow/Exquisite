@@ -3,7 +3,9 @@ import { Actions } from 'react-native-router-flux';
 import {
   LISTEN_TO_USER,
   SIGNIN_USER_SUCCESS,
-  SIGNIN_USER_FAIL
+  SIGNIN_USER_FAIL,
+  REGISTER_USER_SUCCESS,
+  REGISTER_USER_FAIL
  } from './../actions/types';
 
 const INITIAL_STATE = { user: null, error: null }; // no user yet
@@ -32,6 +34,12 @@ export default (state = INITIAL_STATE, action) => {
          error: null
        };
     case SIGNIN_USER_FAIL:
+      return {
+        error: action.payload.error
+      }
+    case REGISTER_USER_SUCCESS:
+       return EXIST_STATE;
+    case REGISTER_USER_FAIL:
       return {
         error: action.payload.error
       }

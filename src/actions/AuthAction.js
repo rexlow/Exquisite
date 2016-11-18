@@ -2,7 +2,9 @@ import firebase from 'firebase';
 import {
   LISTEN_TO_USER,
   SIGNIN_USER_SUCCESS,
-  SIGNIN_USER_FAIL
+  SIGNIN_USER_FAIL,
+  REGISTER_USER_SUCCESS,
+  REGISTER_USER_FAIL
 } from './types';
 
 const loginUserSuccess = (dispatch, user) => {
@@ -12,13 +14,48 @@ const loginUserSuccess = (dispatch, user) => {
   });
 };
 
-const authFail = (dispatch, error) => {
+const loginUserFail = (dispatch, error) => {
   dispatch({
     type: SIGNIN_USER_FAIL,
     payload: {
       error: error.message
     }
   });
+};
+
+const registerUserSuccess = (dispatch, user) => {
+  dispatch({
+    type: REGISTER_USER_SUCCESS,
+    payload: user
+  });
+};
+
+const registerUserFail = (dispatch, error) => {
+  dispatch({
+    type: REGISTER_USER_FAIL,
+    payload: {
+      error: error.message
+    }
+  });
+};
+
+function createUserRef(email, firstName, lastName) {
+  const { currentUser } = firebase.auth();
+   firebase.database().ref(`/Users/${currentUser.uid}`).set({
+     email: email,
+     firstName: firstName,
+     lastName: lastName,
+     creadit: 0
+   });
+};
+
+function updateUserProfile(firstName, lastName) {
+  const user = firebase.auth().currentUser;
+  user.updateProfile({
+    displayName: [firstName] + ' ' + [lastName],
+  })
+    .then(() => console.log('Set displayName successful'))
+    .catch((error) => console.log(error));
 };
 
 export function listenToUser() {
@@ -36,6 +73,18 @@ export function loginUser(email, password) {
   return (dispatch) => {
     firebase.auth().signInWithEmailAndPassword(email, password)
      .then(user => loginUserSuccess(dispatch, user))
-     .catch((error) => authFail(dispatch, error));
+     .catch((error) => loginUserFail(dispatch, error));
+  };
+};
+
+export function registerUser(email, password, firstName, lastName) {
+  return (dispatch) => {
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+     .then(user => {
+       registerUserSuccess(dispatch, user)
+       createUserRef(email, firstName, lastName)
+       updateUserProfile(firstName, lastName)
+     })
+     .catch((error) => registerUserFail(dispatch, error));
   };
 };
