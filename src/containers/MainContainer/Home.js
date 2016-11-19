@@ -11,6 +11,7 @@ import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import * as actions from './../../actions';
 
+import { Spinner } from './../../components/common';
 import ProductItem from './ProductItem';
 
 class Home extends Component {

@@ -53,10 +53,17 @@ class SignIn extends Component {
     this.processAuth(nextProps);
   }
 
+  validateEmail = (email) => {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
+  };
+
   loginUser() {
     const { email, password } = this.state;
     if (email === '' && password === '') {
       Alert.alert('Message', 'Please make sure you have filled in email and password')
+    } else if (!this.validateEmail(email)) {
+      Alert.alert('Message', 'Please make sure you have a proper email.')
     } else {
       this.setState({ buttonState: 'loading' });
       this.props.loginUser(email, password);
@@ -108,11 +115,11 @@ class SignIn extends Component {
                     value={this.state.password}
                     secureTextEntry={true} />
                 </View>
-                <View style={forgotPasswordContainer}>
+                {/* <View style={forgotPasswordContainer}>
                   <TouchableOpacity onPress={() => Actions.resetPassword()}>
                     <Text style={forgotPassword}>Forgot password?</Text>
                   </TouchableOpacity>
-                </View>
+                </View> */}
               </View>
 
               <ButtonComponent

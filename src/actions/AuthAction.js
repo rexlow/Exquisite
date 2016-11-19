@@ -45,7 +45,9 @@ function createUserRef(email, firstName, lastName) {
      email: email,
      firstName: firstName,
      lastName: lastName,
-     credit: 0
+     userGroup: 'Normal User',
+     credit: 0,
+
    });
 };
 

@@ -16,14 +16,14 @@ class ProductItemDetail extends Component {
     const { brand, category, color, description, imageURL, name, price, size } = this.props;
     const { skeleton, centerEverything, container, contentContainer, imageContainer, imageStyle } = styles;
     return(
-      <View style={[skeleton, centerEverything, container, imageStyle, contentContainer]}>
-        <View style={imageContainer}>
+      <View style={[skeleton, centerEverything, container]}>
+        <View style={[imageContainer, skeleton]}>
           <Image
             style={imageStyle}
             source={{uri: imageURL}}
           />
         </View>
-        <View style={contentContainer}>
+        <View style={[contentContainer, skeleton]}>
           <Text>{brand}</Text>
         </View>
       </View>
@@ -49,12 +49,12 @@ const styles = {
     flex: 1,
   },
   imageContainer: {
-    // position: 'absolute',
-    top: 0
+    top: 0,
+    padding: 10
   },
   imageStyle: {
-    width: deviceWidth,
-    height: 150
+    width: 240,
+    height: 320
   },
 }
 

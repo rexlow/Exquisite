@@ -38,7 +38,6 @@ class SignUp extends Component {
       signUp: {
         text: 'SIGN UP',
         onPress: () => {
-          this.setState({ buttonState: 'loading' });
           this.processRegister();
         },
       },
@@ -57,12 +56,21 @@ class SignUp extends Component {
     LayoutAnimation.easeInEaseOut();
   }
 
+  validateEmail = (email) => {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
+  };
+
   processRegister() {
     const { email, password, firstName, lastName } = this.state;
     if (email === '' || password === '' || firstName === '' || lastName === '') {
       Alert.alert('Message', 'Please make sure you have filled in all the required credentials')
+    } else if (!this.validateEmail(email)) {
+      Alert.alert('Message', 'Please make sure you have a proper email.')
+    } else {
+      this.setState({ buttonState: 'loading' });
+      this.props.registerUser(email, password, firstName, lastName);
     }
-    this.props.registerUser(email, password, firstName, lastName);
   }
 
   processAuth(props) {
@@ -86,7 +94,7 @@ class SignUp extends Component {
 
     return(
       <TouchableWithoutFeedback onPress={()=> dismissKeyboard()}>
-        <Image source={require('./../../components/Gradient.jpg')} style={styles.backgroundImage}>
+        <Image source={require('./../../components/Gradient2.jpg')} style={styles.backgroundImage}>
           <View style={[container]}>
 
             <View style={[upperContainer, centerEverything]}>
