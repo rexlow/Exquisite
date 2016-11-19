@@ -3,10 +3,10 @@ import {
   View,
   Text,
   Image,
-  TouchableOpacity,
-  ListView,
-  RefreshControl
+  TouchableWithoutFeedback
 } from 'react-native';
+
+import { Actions } from 'react-native-router-flux';
 
 const deviceWidth = require('Dimensions').get('window').width;
 const deviceHeight = require('Dimensions').get('window').height;
@@ -17,17 +17,19 @@ class ProductItem extends Component {
     const { skeleton, centerEverything, container, imageContainer, imageStyle, textStyle } = styles;
     console.log(this.props);
     return(
-      <View style={[container]}>
-        <View style={[imageContainer]}>
-          <Image
-            source={{uri: imageURL}}
-            style={imageStyle} />
+      <TouchableWithoutFeedback onPress={() => Actions.productItemDetail(this.props.product)}>
+        <View style={[container]}>
+          <View style={[imageContainer]}>
+            <Image
+              source={{uri: imageURL}}
+              style={imageStyle} />
+          </View>
+          <View style={[centerEverything]}>
+            <Text style={textStyle}>{name}</Text>
+            <Text style={textStyle}>${price}</Text>
+          </View>
         </View>
-        <View style={[centerEverything]}>
-          <Text style={textStyle}>{name}</Text>
-          <Text style={textStyle}>${price}</Text>
-        </View>
-      </View>
+      </TouchableWithoutFeedback>
     )
   }
 }

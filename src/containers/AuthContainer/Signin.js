@@ -84,7 +84,7 @@ class SignIn extends Component {
 
     return(
       <TouchableWithoutFeedback onPress={()=> dismissKeyboard()}>
-        <Image source={require('./../../components/Gradient.jpg')} style={styles.backgroundImage}>
+        <Image source={require('./../../components/Gradient2.jpg')} style={styles.backgroundImage}>
           <View style={[container]}>
             <View style={[upperContainer, centerEverything]}>
               <Text style={title}>EXQUISITE</Text>
@@ -194,7 +194,6 @@ const styles = {
   },
   forgotPassword: {
     color: 'white',
-    fontFamily: 'HelveticaNeue-Medium',
     fontWeight: '400'
   },
   bottomText: {

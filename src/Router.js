@@ -16,6 +16,7 @@ import SignIn from './containers/AuthContainer/Signin';
 import SignUp from './containers/AuthContainer/Signup';
 import Home from './containers/MainContainer/Home';
 import Brand from './containers/MainContainer/Brand';
+import ProductItemDetail from './containers/MainContainer/ProductItemDetail';
 
 const TabIcon = ({ selected, title}) => {
   return(
@@ -30,6 +31,10 @@ class RouterComponent extends Component {
 
   componentWillMount() {
     this.props.listenToUser();
+  }
+
+  buyItem() {
+    console.log('todo');
   }
 
   render() {
@@ -50,12 +55,20 @@ class RouterComponent extends Component {
             <Scene key="signin" component={SignIn} />
             <Scene key="signup" component={SignUp} />
           </Scene>
-          <Scene key="main" hideNavBar>
+          <Scene key="main" >
             <Scene key="tabbar" tabs tabBarStyle={tabBarStyle} >
-              <Scene key="home" title="Home" component={Home} icon={TabIcon} />
+              <Scene key="home" title="Product" component={Home} icon={TabIcon} />
               <Scene key="brand" title="Brand" component={Brand} icon={TabIcon} />
             </Scene>
+            <Scene
+              key="productItemDetail"
+              component={ProductItemDetail}
+              leftButtonIconStyle={{tintColor: '#FFF'}}
+              rightTitle="Buy Item"
+              rightButtonTextStyle={{ color: '#FFF' }}
+              onRight={this.buyItem.bind(this)} />
           </Scene>
+
         </Router>
       </View>
     )
@@ -82,7 +95,6 @@ const styles = {
     borderBottomWidth: 0,
   },
   titleStyle: {
-    fontFamily: 'HelveticaNeue-Medium',
     color: '#FFF',
     letterSpacing: 4,
     fontWeight: '500'
