@@ -3,10 +3,12 @@ import {
   Alert,
   View,
   Text,
+  TouchableOpacity,
   Platform,
   PixelRatio
 } from 'react-native';
 
+import ButtonComponent from 'react-native-button-component';
 import { Spinner, Input } from './../../components/common';
 
 const deviceWidth = require('Dimensions').get('window').width;
@@ -67,8 +69,22 @@ class AddProduct extends Component {
       imageURL: null,
       name: '',
       price: '',
-      size: ''
+      size: '',
+      buttonState: 'addProduct'
     }
+
+    this.buttonStates = {
+      addProduct: {
+        text: 'ADD PRODUCT',
+        onPress: () => {
+          // this.submitEventHelper()
+        },
+      },
+      loading: {
+        spinner: true,
+        text: 'ADDING YOUR PRODUCT'
+      }
+    };
   }
 
   selectPhotoTapped() {
@@ -91,7 +107,7 @@ class AddProduct extends Component {
       } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);
       } else {
-        this.setState({ artworkUrl: '' })
+        this.setState({ imageURL: '' })
 
         const source = {uri: 'data:image/jpeg;base64,' + response.data, isStatic: true};
         if (Platform.OS === 'ios') {
@@ -100,10 +116,10 @@ class AddProduct extends Component {
           const source = {uri: response.uri, isStatic: true};
         }
 
-        this.setState({ artworkUrl: '' });
+        this.setState({ imageURL: '' });
         uploadImage(response.uri)
           .then(url => {
-            this.setState({ artworkToUpload: url })
+            this.setState({ imageURL: url })
             this.props.storeArtwork(source);
           })
           .catch(error => {
@@ -115,9 +131,9 @@ class AddProduct extends Component {
   }
 
   render() {
-    const { skeleton, centerEverything, container, textContainer, titleContainer, descContainer,
-            contentContainer, title, desc, productUpperContainer, productLowerContainer, productArtworkContainer,
-            productDetailContainer, propWidth, halfPropWidth } = styles;
+    const { skeleton, centerEverything, container, textContainer, titleContainer, descContainer, buttonContainer,
+            contentContainer, title, desc, productUpperContainer, productLowerContainer, productArtworkContainer, productArtworkTextContainer,
+            productDetailContainer, propWidth, halfPropWidth, artwork, artworkTitle, artworkDesc, buttonStyle } = styles;
     return(
       <View style={[centerEverything, container]}>
         <View style={[centerEverything, textContainer]}>
@@ -131,7 +147,29 @@ class AddProduct extends Component {
         <View style={[contentContainer]}>
           <View style={[productUpperContainer]}>
             <View style={[productArtworkContainer]}>
-
+              <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
+                <View style={[centerEverything, productArtworkTextContainer]}>
+                  {
+                    (() => {
+                      switch (this.state.imageURL) {
+                        case null:
+                          return (
+                            <View>
+                              <Text style={[artworkTitle]}>Tap to upload product artwork</Text>
+                              <Text style={[desc]}>Preferably 320x240</Text>
+                            </View>
+                          );
+                        case '':
+                          return <Spinner size="small"/>
+                        default:
+                          return(
+                            <Image style={artwork} source={{uri: this.state.imageURL}} />
+                          )
+                      }
+                    })()
+                  }
+                </View>
+              </TouchableOpacity>
             </View>
             <View style={[productDetailContainer]}>
               <Input
@@ -169,12 +207,21 @@ class AddProduct extends Component {
           <View style={[productLowerContainer]}>
             <Input
               multiline
-              propHeight={{height: 180}}
+              propHeight={{height: 160}}
               propWidth={propWidth}
               placeholder="Some description about this product"
               onChangeText={(description) => this.setState({ description })}
               value={this.state.description} />
           </View>
+        </View>
+        <View style={[buttonContainer]}>
+          <ButtonComponent
+            style={buttonStyle}
+            type='primary'
+            shape='rectangle'
+            buttonState={this.state.buttonState}
+            states={this.buttonStates}
+          />
         </View>
       </View>
     )
@@ -205,7 +252,10 @@ const styles = {
     width: deviceWidth*0.6,
   },
   contentContainer: {
-    flex: 8,
+    flex: 7,
+  },
+  buttonContainer: {
+    flex: 1
   },
   title: {
     fontSize: 22,
@@ -239,6 +289,10 @@ const styles = {
     shadowRadius: 2,
     margin: 5
   },
+  productArtworkTextContainer: {
+    width: deviceWidth*0.45,
+    height: 250,
+  },
   productDetailContainer: {
     flexDirection: 'column',
     margin: 5
@@ -248,6 +302,27 @@ const styles = {
   },
   halfPropWidth: {
     width: deviceWidth*0.4
+  },
+  artwork: {
+    width: 240,
+    height: 320
+  },
+  artworkTitle: {
+    fontSize: 15,
+    textAlign: 'center'
+  },
+  artworkDesc: {
+    color: 'grey',
+    fontSize: 13,
+    fontFamily: 'Helvetica Neue',
+    fontWeight: '300',
+    textAlign: 'center'
+  },
+  buttonStyle: {
+    height: 40,
+    width: deviceWidth*0.7,
+    borderRadius: 20,
+    margin: 3
   },
 }
 

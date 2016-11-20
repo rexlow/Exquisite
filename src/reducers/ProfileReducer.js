@@ -1,10 +1,10 @@
 import {
-  GET_USER_GROUP
+  GET_USER_GROUP,
  } from './../actions/types';
 
 const INITIAL_STATE = {
- userGroup: null,
- userType: null,
+  userGroup: null,
+  userType: null,
 };
 
 import { REHYDRATE } from 'redux-persist/constants'

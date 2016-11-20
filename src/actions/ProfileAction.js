@@ -1,7 +1,8 @@
 import _ from 'lodash';
 import firebase from 'firebase';
 import {
-  GET_USER_GROUP
+  GET_USER_GROUP,
+  STORE_ARTWORK_TEMPORARILY
 } from './types';
 
 //talk to database and get user group
@@ -20,5 +21,13 @@ export function getUserGroup() {
           };
         };
       });
+  };
+};
+
+//dont persist image
+export function storeArtwork(source) {
+  return {
+    type: STORE_ARTWORK_TEMPORARILY,
+    payload: source
   };
 };

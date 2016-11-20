@@ -28,7 +28,7 @@ const Input = ({ placeholder, secureTextEntry, onChangeText, value, propHeight, 
 
 const styles = {
   inputStyle: {
-    height: 40,
+    height: 42,
     width: deviceWidth*0.7,
     borderColor: '#CFD0D1',
     borderWidth: 1,
