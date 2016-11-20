@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
   View,
   Text,
+  Image,
   LayoutAnimation
 } from 'react-native';
 
@@ -39,11 +40,13 @@ class SplashScreen extends Component {
 
   render() {
     return(
-      <View style={styles.container}>
-        <Text style={styles.title}>Exquisite</Text>
-        <Text style={styles.desc}>The only event browser for developer</Text>
-        <Spinner size="small"/>
-      </View>
+      <Image source={require('./Gradient3.jpg')} style={styles.backgroundImage}>
+        <View style={styles.container}>
+          <Text style={styles.title}>Exquisite</Text>
+          <Text style={styles.desc}>A place where shopping is made easy</Text>
+          <Spinner size="small"/>
+        </View>
+      </Image>
     )
   }
 }
@@ -51,22 +54,32 @@ class SplashScreen extends Component {
 const styles = {
   container: {
     flex: 1,
-    backgroundColor: '#F5F6F7',
+    // backgroundColor: '#F5F6F7',
     justifyContent: 'center',
     alignItems: 'center'
   },
   title: {
+    color: 'white',
     fontSize: 38,
     letterSpacing: 9,
     fontFamily: 'HelveticaNeue-Light',
-    paddingBottom: 10
+    paddingBottom: 10,
+    backgroundColor: 'transparent'
   },
   desc: {
+    color: 'white',
     fontSize: 16,
     letterSpacing: 0,
     fontFamily: 'HelveticaNeue-Thin',
-    paddingBottom: 10
-  }
+    paddingBottom: 10,
+    backgroundColor: 'transparent'
+  },
+  backgroundImage: {
+    flex: 1,
+    width: null,
+    height: null,
+    resizeMode: 'cover',
+  },
 }
 
 const mapStateToProps = (state) => {
