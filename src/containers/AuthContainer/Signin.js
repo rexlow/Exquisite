@@ -25,7 +25,7 @@ class SignIn extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: 'konyee95@gmail.com',
+      email: 'konyee@admin.com',
       password: 'password',
       buttonState: 'signIn',
       error: null
@@ -115,11 +115,11 @@ class SignIn extends Component {
                     value={this.state.password}
                     secureTextEntry={true} />
                 </View>
-                {/* <View style={forgotPasswordContainer}>
+                <View style={forgotPasswordContainer}>
                   <TouchableOpacity onPress={() => Actions.resetPassword()}>
                     <Text style={forgotPassword}>Forgot password?</Text>
                   </TouchableOpacity>
-                </View> */}
+                </View>
               </View>
 
               <ButtonComponent
@@ -204,12 +204,12 @@ const styles = {
     fontWeight: '400'
   },
   bottomText: {
-    color: 'white',
+    color: 'grey',
     fontSize: 14,
-    fontWeight: '300',
+    fontWeight: '400',
   },
   redText: {
-    color: 'white'
+    color: 'grey'
   },
   errorText: {
     paddingTop: 10,

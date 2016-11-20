@@ -63,6 +63,19 @@ class RouterComponent extends Component {
     )
   }
 
+  addProductHelper() {
+    Alert.alert(
+      'Confirmation',
+      'Add Product?',
+      [
+        {text: 'Yes', onPress: () => {
+          // this.props.signOut();
+        }},
+        {text: 'Cancel', onPress: () => console.log('add product cancel')}
+      ]
+    )
+  }
+
   render() {
     const { skeleton, container, sceneStyle, navigationBarStyle, titleStyle, tabBarStyle } = styles;
     return(
@@ -97,7 +110,10 @@ class RouterComponent extends Component {
             <Scene
               key="addProduct"
               component={AddProduct}
-              leftButtonIconStyle={{tintColor: '#FFF'}} />
+              leftButtonIconStyle={{tintColor: '#FFF'}}
+              rightTitle="Add"
+              rightButtonTextStyle={{ color: '#FFF' }}
+              onRight={this.addProductHelper.bind(this)} />
             <Scene
               key="productItemDetail"
               component={ProductItemDetail}
