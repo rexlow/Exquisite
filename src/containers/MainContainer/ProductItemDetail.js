@@ -16,8 +16,8 @@ class ProductItemDetail extends Component {
     const { brand, category, color, description, imageURL, name, price, size } = this.props;
     const { skeleton, centerEverything, container, contentContainer, imageContainer, imageStyle } = styles;
     return(
-      <View style={[skeleton, centerEverything, container]}>
-        <View style={[imageContainer, skeleton]}>
+      <View style={[centerEverything, container]}>
+        <View style={[imageContainer]}>
           <Image
             style={imageStyle}
             source={{uri: imageURL}}
@@ -50,7 +50,12 @@ const styles = {
   },
   imageContainer: {
     top: 0,
-    padding: 10
+    margin: 10,
+    borderRadius: 3,
+    shadowColor: 'grey',
+    shadowOffset: { width: 0, height: 2},
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
   },
   imageStyle: {
     width: 240,

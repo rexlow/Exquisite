@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {
+  Alert,
   View,
   Text,
   StatusBar
@@ -15,7 +16,10 @@ import SplashScreen from './components/SplashScreen';
 import SignIn from './containers/AuthContainer/Signin';
 import SignUp from './containers/AuthContainer/Signup';
 import Home from './containers/MainContainer/Home';
+import AddProduct from './containers/MainContainer/AddProduct';
 import Brand from './containers/MainContainer/Brand';
+import Profile from './containers/MainContainer/Profile';
+
 import ProductItemDetail from './containers/MainContainer/ProductItemDetail';
 
 const TabIcon = ({ selected, title}) => {
@@ -33,8 +37,30 @@ class RouterComponent extends Component {
     this.props.listenToUser();
   }
 
-  buyItem() {
-    console.log('todo');
+  buyItemHelper(props) {
+    Alert.alert(
+      'Purchase',
+      `Buy 1 ${props.name} \n with RM ${props.price}?`,
+      [
+        {text: 'Yes', onPress: () => {
+          this.props.buyItem(props.uid);
+        }},
+        {text: 'Cancel', onPress: () => console.log('buy item cancel')}
+      ]
+    )
+  }
+
+  signOutHelper() {
+    Alert.alert(
+      'Sign out',
+      'Are you sure?',
+      [
+        {text: 'Yes', onPress: () => {
+          this.props.signOut();
+        }},
+        {text: 'Cancel', onPress: () => console.log('sign out cancel')}
+      ]
+    )
   }
 
   render() {
@@ -59,14 +85,26 @@ class RouterComponent extends Component {
             <Scene key="tabbar" tabs tabBarStyle={tabBarStyle} >
               <Scene key="home" title="Product" component={Home} icon={TabIcon} />
               <Scene key="brand" title="Brand" component={Brand} icon={TabIcon} />
+              <Scene
+                key="profile"
+                title="Profile"
+                component={Profile}
+                icon={TabIcon}
+                rightTitle="Sign Out"
+                rightButtonTextStyle={{ color: '#FFF' }}
+                onRight={this.signOutHelper.bind(this)}/ >
             </Scene>
+            <Scene
+              key="addProduct"
+              component={AddProduct}
+              leftButtonIconStyle={{tintColor: '#FFF'}} />
             <Scene
               key="productItemDetail"
               component={ProductItemDetail}
               leftButtonIconStyle={{tintColor: '#FFF'}}
               rightTitle="Buy Item"
               rightButtonTextStyle={{ color: '#FFF' }}
-              onRight={this.buyItem.bind(this)} />
+              onRight={this.buyItemHelper.bind(this)} />
           </Scene>
 
         </Router>

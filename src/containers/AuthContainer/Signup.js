@@ -94,7 +94,7 @@ class SignUp extends Component {
 
     return(
       <TouchableWithoutFeedback onPress={()=> dismissKeyboard()}>
-        <Image source={require('./../../components/Gradient2.jpg')} style={styles.backgroundImage}>
+        <Image source={require('./../../components/Gradient3.jpg')} style={styles.backgroundImage}>
           <View style={[container]}>
 
             <View style={[upperContainer, centerEverything]}>

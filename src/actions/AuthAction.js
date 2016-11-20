@@ -4,8 +4,11 @@ import {
   SIGNIN_USER_SUCCESS,
   SIGNIN_USER_FAIL,
   REGISTER_USER_SUCCESS,
-  REGISTER_USER_FAIL
+  REGISTER_USER_FAIL,
+  SIGNOUT_USER
 } from './types';
+
+import { Actions } from 'react-native-router-flux';
 
 const loginUserSuccess = (dispatch, user) => {
   dispatch({
@@ -88,5 +91,13 @@ export function registerUser(email, password, firstName, lastName) {
        updateUserProfile(firstName, lastName)
      })
      .catch((error) => registerUserFail(dispatch, error));
+  };
+};
+
+export function signOut() {
+  firebase.auth().signOut();
+  Actions.auth({ type: 'reset' });
+  return {
+    type: SIGNOUT_USER
   };
 };

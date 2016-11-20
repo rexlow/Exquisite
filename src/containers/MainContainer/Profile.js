@@ -1,16 +1,21 @@
 import React, { Component } from 'react';
 import {
+  Alert,
   View,
   Text
 } from 'react-native';
 
-class Brand extends Component {
+import { Actions } from 'react-native-router-flux';
+import { connect } from 'react-redux';
+import * as actions from './../../actions';
+
+class Profile extends Component {
 
   render() {
     const { centerEverything, container } = styles;
     return(
       <View style={[centerEverything, container]}>
-        <Text>Brand</Text>
+        <Text>Profile</Text>
       </View>
     )
   }
@@ -26,4 +31,4 @@ const styles = {
   }
 }
 
-export default Brand;
+export default connect(null, actions)(Profile);
