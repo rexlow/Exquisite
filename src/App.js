@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-
+import { AsyncStorage } from 'react-native';
 import firebase from 'firebase';
 
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
+import { persistStore, autoRehydrate } from 'redux-persist'
 import ReduxThunk from 'redux-thunk'
 
 import reducers from './reducers';
@@ -23,7 +24,8 @@ class App extends Component {
   }
 
   render() {
-    const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
+    const store = createStore(reducers, {}, applyMiddleware(ReduxThunk), autoRehydrate());
+    persistStore(store, {storage: AsyncStorage})
     return (
       <Provider store={store}>
         <Router />
