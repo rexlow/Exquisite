@@ -9,3 +9,5 @@ export const PULL_PRODUCT_DATA = 'pull_product_data';
 
 export const BUY_ITEM_SUCCESS = 'buy_item_success';
 export const BUY_ITEM_FAIL = 'buy_item_fail';
+
+export const GET_USER_GROUP = 'get_user_group';

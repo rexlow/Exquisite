@@ -4,7 +4,8 @@ import {
   View,
   Text,
   ListView,
-  RefreshControl
+  RefreshControl,
+  TouchableWithoutFeedback
 } from 'react-native';
 
 import { Actions } from 'react-native-router-flux';
@@ -16,9 +17,10 @@ import ProductItem from './ProductItem';
 
 class Home extends Component {
 
-  state = { isRefreshing: false }
+  state = { isRefreshing: false, userType: 'normalUser' }
 
   componentWillMount() {
+    this.props.getUserGroup();
     this.props.pullProductData();
     this.createDataSource(this.props);
   }
@@ -87,7 +89,7 @@ const styles = {
   skeleton: {
     borderWidth: 1,
     borderColor: 'red'
-  }
+  },
 }
 
 const mapStateToProps = (state) => {

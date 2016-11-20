@@ -92,7 +92,7 @@ class RouterComponent extends Component {
                 icon={TabIcon}
                 rightTitle="Sign Out"
                 rightButtonTextStyle={{ color: '#FFF' }}
-                onRight={this.signOutHelper.bind(this)}/ >
+                onRight={this.signOutHelper.bind(this)} />
             </Scene>
             <Scene
               key="addProduct"
@@ -136,7 +136,7 @@ const styles = {
     color: '#FFF',
     letterSpacing: 4,
     fontWeight: '500'
-  }
+  },
 }
 
 export default connect(null, actions)(RouterComponent);

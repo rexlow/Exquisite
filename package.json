@@ -11,6 +11,7 @@
     "lodash": "^4.16.6",
     "react": "15.3.2",
     "react-native": "0.37.0",
+    "react-native-action-button": "^2.0.15",
     "react-native-button-component": "0.0.5",
     "react-native-router-flux": "^3.36.0",
     "react-native-vector-icons": "^2.1.0",
