@@ -25,7 +25,8 @@ class SignIn extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: 'konyee@admin.com',
+      // email: 'konyee@admin.com',
+      email: 'konyee95@gmail.com',
       password: 'password',
       buttonState: 'signIn',
       error: null

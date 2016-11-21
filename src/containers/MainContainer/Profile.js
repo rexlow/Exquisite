@@ -35,11 +35,13 @@ class Profile extends Component {
         </ActionButton>
       )
     } else {
-      <ActionButton buttonColor="#e74c3c">
-        <ActionButton.Item buttonColor='orange' title="Reload Credit" onPress={() => Actions.addProduct()}>
-          {money}
-        </ActionButton.Item>
-      </ActionButton>
+      return (
+        <ActionButton buttonColor="#e74c3c">
+          <ActionButton.Item buttonColor='orange' title="Reload Credit" onPress={() => Actions.addProduct()}>
+            {money}
+          </ActionButton.Item>
+        </ActionButton>
+      )
     }
   }
 
