@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
   Alert,
+  Image,
   View,
   Text,
   TouchableOpacity,
@@ -67,6 +68,7 @@ class AddProduct extends Component {
       color: '',
       description: '',
       imageURL: null,
+      imageToUpload: '',
       name: '',
       price: '',
       size: '',
@@ -77,7 +79,7 @@ class AddProduct extends Component {
       addProduct: {
         text: 'ADD PRODUCT',
         onPress: () => {
-          // this.submitEventHelper()
+          this.submitProductHelper()
         },
       },
       loading: {
@@ -89,12 +91,50 @@ class AddProduct extends Component {
 
   componentWillMount() {
     this.props.resetProductArtwork()
+    this.props.resetMessage()
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.propsMessage(nextProps)
+  }
+
+  propsMessage(props) {
+    console.log(props);
+    if (props.profile.productArtwork) {
+      this.setImage(props.profile.productArtwork)
+    }
+
+    if (props.profile.message) {
+      this.setState({ buttonState: 'addProduct' });
+      Alert.alert('Message', props.profile.message, [
+        {text: 'Ok', onPress: () => Actions.pop()}
+      ])
+      this.props.resetMessage()
+    }
   }
 
   setImage(url) {
     this.setState({
       imageURL: url
     });
+  }
+
+
+  submitProductHelper() {
+    const { brand, category, color, description, imageToUpload, name, price, size } = this.state;
+    if (brand         !== '' &&
+        category      !== '' &&
+        color         !== '' &&
+        description   !== '' &&
+        name          !== '' &&
+        price         !== '' &&
+        size          !== '' &&
+        imageToUpload !== '') {
+      this.setState({ buttonState: 'loading' });
+      this.props.submitProduct(brand, category, color, description, imageToUpload, name, price, size)
+    } else {
+      Alert.alert('Error', 'Please make sure you have all the fields filled in.')
+    }
   }
 
   selectPhotoTapped() {
@@ -129,12 +169,12 @@ class AddProduct extends Component {
         this.setState({ imageURL: '' });
         uploadImage(response.uri)
           .then(url => {
-            this.setState({ imageURL: url })
+            this.setState({ imageToUpload: url })
             this.props.storeArtwork(source);
           })
           .catch(error => {
             Alert.alert('Image uploading failed', 'Please check your internet connection')
-            this.setState({ artworkUrl: null })
+            this.setState({ imageURL: null })
           });
       }
     });
@@ -173,7 +213,7 @@ class AddProduct extends Component {
                           return <Spinner size="small"/>
                         default:
                           return(
-                            <Image style={artwork} source={{uri: this.state.imageURL}} />
+                            <Image style={productArtworkContainer} source={{uri: this.state.imageURL}} />
                           )
                       }
                     })()

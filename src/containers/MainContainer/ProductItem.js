@@ -16,7 +16,7 @@ class ProductItem extends Component {
 
   render() {
     const { name, price, imageURL } = this.props.product;
-    const { skeleton, centerEverything, container, imageContainer, imageStyle, textStyle } = styles;
+    const { skeleton, centerEverything, container, imageContainer, textContainer, imageStyle, textStyle, boldText } = styles;
     return(
       <TouchableWithoutFeedback onPress={() => Actions.productItemDetail(this.props.product)}>
         <View style={[container]}>
@@ -25,9 +25,9 @@ class ProductItem extends Component {
               source={{uri: imageURL}}
               style={imageStyle} />
           </View>
-          <View style={[centerEverything]}>
-            <Text style={textStyle}>{name}</Text>
-            <Text style={textStyle}>${price}</Text>
+          <View style={[centerEverything, textContainer]}>
+            <Text style={[textStyle, boldText]}>{name}</Text>
+            <Text style={textStyle}>RM {price}</Text>
           </View>
         </View>
       </TouchableWithoutFeedback>
@@ -57,14 +57,21 @@ const styles = {
     margin: 5
   },
   imageContainer: {
-    flex: 7
+    flex: 8
+  },
+  textContainer: {
+    flex: 2
   },
   imageStyle: {
     height: 200,
     width: null,
   },
   textStyle: {
-    textAlign: 'center'
+    textAlign: 'center',
+    backgroundColor: 'transparent'
+  },
+  boldText: {
+    fontWeight: '500'
   }
 }
 
