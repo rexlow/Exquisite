@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import firebase from 'firebase';
 import {
+  RESET_ARTWORK,
   GET_USER_GROUP,
   STORE_ARTWORK_TEMPORARILY
 } from './types';
@@ -21,6 +22,12 @@ export function getUserGroup() {
           };
         };
       });
+  };
+};
+
+export function resetProductArtwork() {
+  return {
+    type: RESET_ARTWORK
   };
 };
 

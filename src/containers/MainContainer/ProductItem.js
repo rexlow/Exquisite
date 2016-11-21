@@ -7,30 +7,12 @@ import {
   TouchableWithoutFeedback
 } from 'react-native';
 
-import { connect } from 'react-redux';
-import * as actions from './../../actions';
 import { Actions } from 'react-native-router-flux';
 
 const deviceWidth = require('Dimensions').get('window').width;
 const deviceHeight = require('Dimensions').get('window').height;
 
 class ProductItem extends Component {
-
-  componentWillReceiveProps(nextProps) {
-    this.buyItemCallback(nextProps);
-  }
-
-  buyItemCallback(props) {
-    if (props.api.message) {
-      const message = props.api.message;
-      Alert.alert(
-        'Message',
-        message,
-      [
-        {text: 'Return', onPress: () => console.log('Return after ticket reducer')}
-      ]);
-    }
-  }
 
   render() {
     const { name, price, imageURL } = this.props.product;
@@ -86,11 +68,4 @@ const styles = {
   }
 }
 
-const mapStateToProps = (state) => {
-  console.log(state);
-  return {
-    api: state.api
-  }
-}
-
-export default connect(mapStateToProps, actions)(ProductItem);
+export default ProductItem;

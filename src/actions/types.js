@@ -12,4 +12,5 @@ export const BUY_ITEM_FAIL = 'buy_item_fail';
 
 export const GET_USER_GROUP = 'get_user_group';
 
+export const RESET_ARTWORK = 'reset_artwork';
 export const STORE_ARTWORK_TEMPORARILY = 'store_artwork_temporarily';

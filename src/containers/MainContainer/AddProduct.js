@@ -87,6 +87,16 @@ class AddProduct extends Component {
     };
   }
 
+  componentWillMount() {
+    this.props.resetProductArtwork()
+  }
+
+  setImage(url) {
+    this.setState({
+      imageURL: url
+    });
+  }
+
   selectPhotoTapped() {
     const options = {
       quality: 1.0,
@@ -326,4 +336,10 @@ const styles = {
   },
 }
 
-export default (AddProduct);
+const mapStateToProps = (state) => {
+  return {
+    profile: state.profile
+  }
+}
+
+export default connect(mapStateToProps, actions)(AddProduct);
