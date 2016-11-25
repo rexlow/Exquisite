@@ -93,7 +93,7 @@ const styles = {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state);
+  // console.log(state);
   const products = _.map(state.api.productList, (val, uid) => {
     return {...val, uid};
   })

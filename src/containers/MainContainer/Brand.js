@@ -1,8 +1,13 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import {
   View,
   Text
 } from 'react-native';
+
+import { Actions } from 'react-native-router-flux';
+import { connect } from 'react-redux';
+import * as actions from './../../actions';
 
 class Brand extends Component {
 
@@ -26,4 +31,14 @@ const styles = {
   }
 }
 
-export default Brand;
+const mapStateToProps = (state) => {
+  console.log('brand');
+  console.log(state);
+  const products = _.map(state.api.productList, (val, uid) => {
+    return {...val, uid};
+  })
+
+  return { products };
+}
+
+export default connect(mapStateToProps, actions)(Brand);
