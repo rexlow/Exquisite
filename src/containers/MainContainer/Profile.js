@@ -13,6 +13,7 @@ import ActionButton from 'react-native-action-button';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 const add = (<MaterialIcon name="add" size={33} color="white" />)
 const money = (<MaterialIcon name="attach-money" size={33} color="white" />)
+const storage = (<MaterialIcon name="storage" size={33} color="white" />)
 
 class Profile extends Component {
 
@@ -32,6 +33,9 @@ class Profile extends Component {
           <ActionButton.Item buttonColor='orange' title="Reload Credit" onPress={() => Actions.addProduct()}>
             {money}
           </ActionButton.Item>
+          <ActionButton.Item buttonColor='#2196F3' title="View Purchased Item" onPress={() => Actions.purchasedItem()}>
+            {storage}
+          </ActionButton.Item>
         </ActionButton>
       )
     } else {
@@ -39,6 +43,9 @@ class Profile extends Component {
         <ActionButton buttonColor="#e74c3c">
           <ActionButton.Item buttonColor='orange' title="Reload Credit" onPress={() => Actions.addProduct()}>
             {money}
+          </ActionButton.Item>
+          <ActionButton.Item buttonColor='#2196F3' title="View Purchased Item" onPress={() => Actions.purchasedItem()}>
+            {storage}
           </ActionButton.Item>
         </ActionButton>
       )

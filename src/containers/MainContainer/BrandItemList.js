@@ -55,7 +55,7 @@ const styles = {
   },
   container: {
     flex: 1,
-    marginTop: 110,
+    marginTop: 70,
   },
   listViewContainer: {
     justifyContent: 'center',

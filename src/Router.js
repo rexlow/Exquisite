@@ -18,12 +18,15 @@ import SignUp from './containers/AuthContainer/Signup';
 import ResetPassword from './containers/AuthContainer/ResetPassword';
 
 import Home from './containers/MainContainer/Home';
-import AddProduct from './containers/MainContainer/AddProduct';
 import Brand from './containers/MainContainer/Brand';
 import Profile from './containers/MainContainer/Profile';
 
+import AddProduct from './containers/MainContainer/AddProduct';
+import PurchasedItem from './containers/MainContainer/PurchasedItem';
+
 import ProductItemDetail from './containers/MainContainer/ProductItemDetail';
 import BrandItemList from './containers/MainContainer/BrandItemList';
+
 
 const TabIcon = ({ selected, title}) => {
   return(
@@ -101,6 +104,10 @@ class RouterComponent extends Component {
             <Scene
               key="addProduct"
               component={AddProduct}
+              leftButtonIconStyle={{tintColor: '#FFF'}} />
+            <Scene
+              key="purchasedItem"
+              component={PurchasedItem}
               leftButtonIconStyle={{tintColor: '#FFF'}} />
             <Scene
               key="productItemDetail"
