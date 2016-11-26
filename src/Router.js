@@ -15,6 +15,8 @@ import SplashScreen from './components/SplashScreen';
 
 import SignIn from './containers/AuthContainer/Signin';
 import SignUp from './containers/AuthContainer/Signup';
+import ResetPassword from './containers/AuthContainer/ResetPassword';
+
 import Home from './containers/MainContainer/Home';
 import AddProduct from './containers/MainContainer/AddProduct';
 import Brand from './containers/MainContainer/Brand';
@@ -81,6 +83,7 @@ class RouterComponent extends Component {
             <Scene key="splash" component={SplashScreen} initial />
             <Scene key="signin" component={SignIn} />
             <Scene key="signup" component={SignUp} />
+            <Scene key="resetPassword" component={ResetPassword} />
           </Scene>
           <Scene key="main" >
             <Scene key="tabbar" tabs tabBarStyle={tabBarStyle} >

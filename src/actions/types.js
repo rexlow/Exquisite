@@ -5,6 +5,9 @@ export const REGISTER_USER_SUCCESS = 'register_user_success';
 export const REGISTER_USER_FAIL = 'register_user_fail';
 export const SIGNOUT_USER = 'signout_user';
 
+export const RESET_PASSWORD_SUCCESS = 'reset_password_success';
+export const RESET_PASSWORD_FAIL = 'reset_password_fail';
+
 export const PULL_PRODUCT_DATA = 'pull_product_data';
 
 export const BUY_ITEM_SUCCESS = 'buy_item_success';

@@ -6,7 +6,9 @@ import {
   SIGNIN_USER_FAIL,
   REGISTER_USER_SUCCESS,
   REGISTER_USER_FAIL,
-  SIGNOUT_USER
+  SIGNOUT_USER,
+  RESET_PASSWORD_SUCCESS,
+  RESET_PASSWORD_FAIL
  } from './../actions/types';
 
 const INITIAL_STATE = { user: null, error: null }; // no user yet
@@ -46,6 +48,14 @@ export default (state = INITIAL_STATE, action) => {
       }
     case SIGNOUT_USER:
        return INITIAL_STATE;
+    case RESET_PASSWORD_SUCCESS:
+       return {
+         message: action.payload
+       }
+    case RESET_PASSWORD_FAIL:
+       return {
+         message: action.payload
+       }
     default:
       return state;
   }

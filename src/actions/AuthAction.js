@@ -5,7 +5,9 @@ import {
   SIGNIN_USER_FAIL,
   REGISTER_USER_SUCCESS,
   REGISTER_USER_FAIL,
-  SIGNOUT_USER
+  SIGNOUT_USER,
+  RESET_PASSWORD_SUCCESS,
+  RESET_PASSWORD_FAIL
 } from './types';
 
 import { Actions } from 'react-native-router-flux';
@@ -99,5 +101,23 @@ export function signOut() {
   Actions.auth({ type: 'reset' });
   return {
     type: SIGNOUT_USER
+  };
+};
+
+export function resetPassword(email) {
+  return (dispatch) => {
+    firebase.auth().sendPasswordResetEmail(email)
+     .then(() => {
+       dispatch({
+         type: RESET_PASSWORD_SUCCESS,
+         payload: 'Email sent, please check your mailbox'
+       });
+     })
+     .catch((error) => {
+       dispatch({
+         type: RESET_PASSWORD_FAIL,
+         payload: 'Unknown error occured, please make sure you have the correct email'
+       });
+     });
   };
 };
