@@ -89,15 +89,14 @@ const styles = {
     flex: 8
   },
   titleStyle: {
-    fontSize: 22,
-    letterSpacing: 3,
+    fontSize: 20,
+    letterSpacing: 1,
     fontFamily: 'HelveticaNeue-Medium',
-    fontWeight: '500',
+    fontWeight: '400',
   },
   titleSmallStyle: {
-    fontSize: 16,
-    letterSpacing: 1,
-    fontWeight: '400',
+    fontSize: 14,
+    fontWeight: '300',
     paddingTop: 5
   }
 }

@@ -13,7 +13,7 @@ import { connect } from 'react-redux';
 import * as actions from './../../actions';
 
 import { Spinner } from './../../components/common';
-import ProductItem from './ProductItem';
+import ProductItem from './../../components/ProductItem';
 
 class Home extends Component {
 
@@ -93,11 +93,9 @@ const styles = {
 }
 
 const mapStateToProps = (state) => {
-  // console.log(state);
   const products = _.map(state.api.productList, (val, uid) => {
     return {...val, uid};
   })
-
   return { products };
 }
 

@@ -21,6 +21,7 @@ import Brand from './containers/MainContainer/Brand';
 import Profile from './containers/MainContainer/Profile';
 
 import ProductItemDetail from './containers/MainContainer/ProductItemDetail';
+import BrandItemList from './containers/MainContainer/BrandItemList';
 
 const TabIcon = ({ selected, title}) => {
   return(
@@ -105,6 +106,10 @@ class RouterComponent extends Component {
               rightTitle="Buy Item"
               rightButtonTextStyle={{ color: '#FFF' }}
               onRight={this.buyItemHelper.bind(this)} />
+            <Scene
+              key="brandItemList"
+              component={BrandItemList}
+              leftButtonIconStyle={{tintColor: '#FFF'}} />
           </Scene>
 
         </Router>

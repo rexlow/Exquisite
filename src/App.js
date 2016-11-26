@@ -1,3 +1,4 @@
+console.disableYellowBox = true;
 import React, { Component } from 'react';
 import { AsyncStorage } from 'react-native';
 import firebase from 'firebase';
