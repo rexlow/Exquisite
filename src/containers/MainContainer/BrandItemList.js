@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import {
   View,
@@ -5,17 +6,27 @@ import {
   ListView
 } from 'react-native';
 
+import ProductItem from './../../components/ProductItem';
+
 class BrandItemList extends Component {
 
   componentWillMount() {
-    this.createDataSource(this.props);
+    const {uid, ...product} = this.props.product
+    const newProduct = _.values(product);
+    this.createDataSource(newProduct);
   }
 
-  createDataSource({ products }) {
+  componentWillReceiveProps(nextProps) {
+    const {uid, ...product} = this.props.product
+    const newProduct = _.values(product);
+    this.createDataSource(newProduct);
+  }
+
+  createDataSource(newProduct) {
     const ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2
     });
-    this.dataSource = ds.cloneWithRows(products);
+    this.dataSource = ds.cloneWithRows(newProduct);
   }
 
   renderRow(product) {
@@ -23,7 +34,7 @@ class BrandItemList extends Component {
   }
 
   render() {
-    console.log(this.props);
+    const { centerEverything, container, listViewContainer, skeleton } = styles;
     return(
       <View style={[centerEverything, container]}>
         <ListView
@@ -36,5 +47,27 @@ class BrandItemList extends Component {
     )
   }
 }
+
+const styles = {
+  centerEverything: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  container: {
+    flex: 1,
+    marginTop: 110,
+  },
+  listViewContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  skeleton: {
+    borderWidth: 1,
+    borderColor: 'red'
+  },
+}
+
 
 export default BrandItemList;

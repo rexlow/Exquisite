@@ -1,3 +1,4 @@
+'use strict';
 import React, { Component } from 'react';
 import {
   Alert,
@@ -15,11 +16,11 @@ const deviceHeight = require('Dimensions').get('window').height;
 class BrandItem extends Component {
 
   render() {
-    console.log(this.props);
-    const { uid } = this.props.product;
+    const {uid, ...product} = this.props.product
+    const newProduct = product;
     const { skeleton, centerEverything, container, textContainer, textStyle, boldText, backgroundImage } = styles;
     return(
-      <TouchableWithoutFeedback onPress={() => Actions.brandItemList(this.props.product)}>
+      <TouchableWithoutFeedback onPress={() => Actions.brandItemList(this.props)}>
         <View style={[container]}>
           <Image source={require('./Brand.jpg')} style={backgroundImage}>
             <View style={[centerEverything, textContainer]}>
