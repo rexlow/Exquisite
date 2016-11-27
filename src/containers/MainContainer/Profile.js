@@ -13,7 +13,8 @@ import ActionButton from 'react-native-action-button';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 const add = (<MaterialIcon name="add" size={33} color="white" />)
 const money = (<MaterialIcon name="attach-money" size={33} color="white" />)
-const storage = (<MaterialIcon name="storage" size={33} color="white" />)
+const purchased = (<MaterialIcon name="filter-vintage" size={33} color="white" />)
+const storage = (<MaterialIcon name="details" size={33} color="white" />)
 
 class Profile extends Component {
 
@@ -30,11 +31,14 @@ class Profile extends Component {
           <ActionButton.Item buttonColor='#9b59b6' title="Add Product" onPress={() => Actions.addProduct()}>
             {add}
           </ActionButton.Item>
+          <ActionButton.Item buttonColor='#2b78ff' title="Manage Product" onPress={() => Actions.manageProduct()}>
+            {storage}
+          </ActionButton.Item>
           <ActionButton.Item buttonColor='orange' title="Reload Credit" onPress={() => Actions.addProduct()}>
             {money}
           </ActionButton.Item>
-          <ActionButton.Item buttonColor='#2196F3' title="View Purchased Item" onPress={() => Actions.purchasedItem()}>
-            {storage}
+          <ActionButton.Item buttonColor='#f442cb' title="View Purchased Item" onPress={() => Actions.purchasedItem()}>
+            {purchased}
           </ActionButton.Item>
         </ActionButton>
       )
@@ -44,8 +48,8 @@ class Profile extends Component {
           <ActionButton.Item buttonColor='orange' title="Reload Credit" onPress={() => Actions.addProduct()}>
             {money}
           </ActionButton.Item>
-          <ActionButton.Item buttonColor='#2196F3' title="View Purchased Item" onPress={() => Actions.purchasedItem()}>
-            {storage}
+          <ActionButton.Item buttonColor='#f442cb' title="View Purchased Item" onPress={() => Actions.purchasedItem()}>
+            {purchased}
           </ActionButton.Item>
         </ActionButton>
       )

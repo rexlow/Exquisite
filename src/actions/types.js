@@ -21,3 +21,14 @@ export const STORE_ARTWORK_TEMPORARILY = 'store_artwork_temporarily';
 
 export const PRODUCT_ADDED_SUCCESS = 'product_added_success';
 export const PRODUCT_ADDED_FAIL = 'product_added_fail';
+
+export const APPROVE_PRODUCT_SUCCESS = 'approve_product_success';
+export const APPROVE_PRODUCT_FAIL = 'approve_product_fail';
+
+export const REJECT_PRODUCT_SUCCESS = 'reject_product_success';
+export const REJECT_PRODUCT_FAIL = 'reject_product_fail';
+
+export const DELETE_PRODUCT_SUCCESS = 'delete_product_success';
+export const DELETE_PRODUCT_FAIL = 'delete_product_fail';
+
+export const RESET_APPROVE_MESSAGE = 'reset_approve_message';

@@ -22,6 +22,7 @@ import Brand from './containers/MainContainer/Brand';
 import Profile from './containers/MainContainer/Profile';
 
 import AddProduct from './containers/MainContainer/AddProduct';
+import ManageProduct from './containers/MainContainer/ManageProduct';
 import PurchasedItem from './containers/MainContainer/PurchasedItem';
 
 import ProductItemDetail from './containers/MainContainer/ProductItemDetail';
@@ -104,6 +105,10 @@ class RouterComponent extends Component {
             <Scene
               key="addProduct"
               component={AddProduct}
+              leftButtonIconStyle={{tintColor: '#FFF'}} />
+            <Scene
+              key="manageProduct"
+              component={ManageProduct}
               leftButtonIconStyle={{tintColor: '#FFF'}} />
             <Scene
               key="purchasedItem"
