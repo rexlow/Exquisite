@@ -45,6 +45,8 @@ class ProductItemDetail extends Component {
         </View>
         <View style={[contentContainer, skeleton]}>
           <Text>{brand}</Text>
+          <Text>{category}</Text>
+          <Text>{color}</Text>
         </View>
       </View>
     )
