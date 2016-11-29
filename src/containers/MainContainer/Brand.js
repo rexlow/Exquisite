@@ -11,6 +11,11 @@ import {
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import * as actions from './../../actions';
+
+import ActionButton from 'react-native-action-button';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+const basket = (<MaterialIcon name="shopping-basket" size={33} color="white" />)
+
 import ProductItem from './../../components/ProductItem';
 import BrandItem from './../../components/BrandItem';
 
@@ -63,6 +68,11 @@ class Brand extends Component {
             />
           }
         />
+        <ActionButton buttonColor="#e74c3c" offsetX={0} offsetY={0}>
+          <ActionButton.Item buttonColor='#9b59b6' title="My basket" onPress={() => Actions.basket()}>
+            {basket}
+          </ActionButton.Item>
+        </ActionButton>
       </View>
     )
   }

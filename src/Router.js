@@ -21,6 +21,8 @@ import Home from './containers/MainContainer/Home';
 import Brand from './containers/MainContainer/Brand';
 import Profile from './containers/MainContainer/Profile';
 
+import Basket from './containers/MainContainer/Basket';
+
 import AddProduct from './containers/MainContainer/AddProduct';
 import ManageProduct from './containers/MainContainer/ManageProduct';
 import PurchasedItem from './containers/MainContainer/PurchasedItem';
@@ -102,6 +104,10 @@ class RouterComponent extends Component {
                 rightButtonTextStyle={{ color: '#FFF' }}
                 onRight={this.signOutHelper.bind(this)} />
             </Scene>
+            <Scene
+              key="basket"
+              component={Basket}
+              leftButtonIconStyle={{tintColor: '#FFF'}} />
             <Scene
               key="addProduct"
               component={AddProduct}

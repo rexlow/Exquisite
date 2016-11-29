@@ -2,30 +2,21 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import {
   View,
-  Text,
   ListView,
   RefreshControl,
-  TouchableWithoutFeedback
+  Text
 } from 'react-native';
 
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import * as actions from './../../actions';
 
-import ActionButton from 'react-native-action-button';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-const basket = (<MaterialIcon name="shopping-basket" size={33} color="white" />)
-
-import { Spinner } from './../../components/common';
 import ProductItem from './../../components/ProductItem';
 
-class Home extends Component {
-
-  state = { isRefreshing: false, userType: 'normalUser' }
+class Basket extends Component {
+  state = { isRefreshing: false }
 
   componentWillMount() {
-    this.props.getUserGroup();
-    this.props.pullProductData();
     this.createDataSource(this.props);
   }
 
@@ -36,11 +27,11 @@ class Home extends Component {
     }
   }
 
-  createDataSource({ products }) {
+  createDataSource({ purchasedItem }) {
     const ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2
     });
-    this.dataSource = ds.cloneWithRows(products);
+    this.dataSource = ds.cloneWithRows(purchasedItem);
   }
 
   renderRow(product) {
@@ -52,7 +43,7 @@ class Home extends Component {
     this.props.pullProductData()
   }
 
-  render() {
+  render(){
     const { centerEverything, container, listViewContainer, skeleton } = styles;
     return(
       <View style={[centerEverything, container]}>
@@ -70,11 +61,6 @@ class Home extends Component {
             />
           }
         />
-        <ActionButton buttonColor="#e74c3c" offsetX={0} offsetY={0}>
-          <ActionButton.Item buttonColor='#9b59b6' title="My basket" onPress={() => Actions.basket()}>
-            {basket}
-          </ActionButton.Item>
-        </ActionButton>
       </View>
     )
   }
@@ -102,14 +88,16 @@ const styles = {
 }
 
 const mapStateToProps = (state) => {
-  const filteredProducts = _.pickBy(state.api.productList, {'approved': true})
+  let unFilteredItem = state.profile.userGroup.purchasedItem
+  let availableItem = state.api.productList
 
-  const products = _.map(filteredProducts, (val, uid) => {
-    return {...val, uid};
-  })
+  var purchasedItem = []
 
-  console.log(products);
-  return { products };
+  Object.keys(availableItem).forEach(
+    (key) => unFilteredItem[key] && (purchasedItem.push({ ...availableItem[key] }))
+  )
+
+  return { purchasedItem }
 }
 
-export default connect(mapStateToProps, actions)(Home);
+export default connect(mapStateToProps, actions)(Basket);

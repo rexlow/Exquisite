@@ -12,6 +12,8 @@ import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import * as actions from './../../actions';
 
+import ProductItem from './../../components/ProductItem';
+
 const deviceWidth = require('Dimensions').get('window').width;
 const deviceHeight = require('Dimensions').get('window').height;
 
@@ -19,8 +21,35 @@ class PurchasedItem extends Component {
 
   state = { isRefreshing: false }
 
+  componentWillMount() {
+    this.createDataSource(this.props);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.createDataSource(nextProps);
+    if (nextProps) {
+      this.setState({ isRefreshing: false })
+    }
+  }
+
+  createDataSource({ purchasedItem }) {
+    const ds = new ListView.DataSource({
+      rowHasChanged: (r1, r2) => r1 !== r2
+    });
+    this.dataSource = ds.cloneWithRows(purchasedItem);
+  }
+
+  renderRow(product) {
+    return <ProductItem product={product} />;
+  }
+
+  onRefresh = () => {
+    this.setState({ isRefreshing: true });
+    this.props.pullProductData()
+  }
+
   render() {
-    const { centerEverything, container, textContainer, contentContainer, titleContainer, descContainer, title, desc, listViewContainer } = styles;
+    const { skeleton, centerEverything, container, textContainer, contentContainer, titleContainer, descContainer, title, desc, listViewContainer } = styles;
     return(
       <View style={[centerEverything, container]}>
         <View style={[centerEverything, textContainer]}>
@@ -31,8 +60,21 @@ class PurchasedItem extends Component {
             <Text style={[desc]}>All your purchased item</Text>
           </View>
         </View>
-        <View style={contentContainer}>
-
+        <View style={[contentContainer]}>
+          <ListView
+            contentContainerStyle={listViewContainer}
+            enableEmptySections
+            dataSource={this.dataSource}
+            renderRow={this.renderRow}
+            refreshControl={
+              <RefreshControl
+                refreshing={this.state.isRefreshing}
+                onRefresh={this.onRefresh}
+                title="Loading data..."
+                progressBackgroundColor="#ffff00"
+              />
+            }
+          />
         </View>
       </View>
     )
@@ -40,13 +82,17 @@ class PurchasedItem extends Component {
 }
 
 const styles = {
+  skeleton: {
+    borderWidth: 1,
+    borderColor: 'blue'
+  },
   centerEverything: {
     justifyContent: 'center',
     alignItems: 'center'
   },
   container: {
     flex: 1,
-    marginTop: 110,
+    // marginTop: 110,
   },
   textContainer: {
     flex: 2,
@@ -78,7 +124,22 @@ const styles = {
   listViewContainer: {
     justifyContent: 'center',
     alignItems: 'center',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
 }
 
-export default connect(null, actions)(PurchasedItem);
+const mapStateToProps = (state) => {
+  let unFilteredItem = state.profile.userGroup.purchasedItem
+  let availableItem = state.api.productList
+
+  var purchasedItem = []
+
+  Object.keys(availableItem).forEach(
+    (key) => unFilteredItem[key] && (purchasedItem.push({ ...availableItem[key] }))
+  )
+
+  return { purchasedItem }
+}
+
+export default connect(mapStateToProps, actions)(PurchasedItem);

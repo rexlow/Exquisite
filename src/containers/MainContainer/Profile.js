@@ -15,6 +15,7 @@ const add = (<MaterialIcon name="add" size={33} color="white" />)
 const money = (<MaterialIcon name="attach-money" size={33} color="white" />)
 const purchased = (<MaterialIcon name="filter-vintage" size={33} color="white" />)
 const storage = (<MaterialIcon name="details" size={33} color="white" />)
+const basket = (<MaterialIcon name="shopping-basket" size={33} color="white" />)
 
 class Profile extends Component {
 
@@ -27,7 +28,7 @@ class Profile extends Component {
   renderAdminButton() {
     if (this.props.profile.userType === 'Admin') {
       return (
-        <ActionButton buttonColor="#e74c3c">
+        <ActionButton buttonColor="#e74c3c" offsetX={0} offsetY={0}>
           <ActionButton.Item buttonColor='#9b59b6' title="Add Product" onPress={() => Actions.addProduct()}>
             {add}
           </ActionButton.Item>
@@ -40,16 +41,22 @@ class Profile extends Component {
           <ActionButton.Item buttonColor='#f442cb' title="View Purchased Item" onPress={() => Actions.purchasedItem()}>
             {purchased}
           </ActionButton.Item>
+          <ActionButton.Item buttonColor='#9b59b6' title="My basket" onPress={() => Actions.basket()}>
+            {basket}
+          </ActionButton.Item>
         </ActionButton>
       )
     } else {
       return (
-        <ActionButton buttonColor="#e74c3c">
+        <ActionButton buttonColor="#e74c3c" offsetX={0} offsetY={0}>
           <ActionButton.Item buttonColor='orange' title="Reload Credit" onPress={() => Actions.addProduct()}>
             {money}
           </ActionButton.Item>
           <ActionButton.Item buttonColor='#f442cb' title="View Purchased Item" onPress={() => Actions.purchasedItem()}>
             {purchased}
+          </ActionButton.Item>
+          <ActionButton.Item buttonColor='#9b59b6' title="My basket" onPress={() => Actions.basket()}>
+            {basket}
           </ActionButton.Item>
         </ActionButton>
       )
