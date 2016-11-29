@@ -6,7 +6,9 @@ import {
   GET_USER_GROUP,
   STORE_ARTWORK_TEMPORARILY,
   PRODUCT_ADDED_SUCCESS,
-  PRODUCT_ADDED_FAIL
+  PRODUCT_ADDED_FAIL,
+  RELOAD_CREDIT_SUCCESS,
+  RELOAD_CREDIT_FAIL
 } from './types';
 
 //talk to database and get user group
@@ -18,6 +20,7 @@ export function getUserGroup() {
         var userData = _.values(snapshot.val());
         for (var i = 0; i < userData.length; i++) {
           if (userData[i].email === currentUser.email) {
+            console.log(userData[i]);
             dispatch({
               type: GET_USER_GROUP,
               payload: userData[i]
@@ -63,4 +66,14 @@ export function submitProduct(brand, category, color, description, imageToUpload
     }).then(() => dispatch({ type: PRODUCT_ADDED_SUCCESS, payload: 'Congratz! Your product is being added' }))
       .catch((error) => dispatch({ type: PRODUCT_ADDED_FAIL, payload: 'Sorry, something happened. Please try again later' }))
   }
+};
+
+export function reloadCredit(amount) {
+  const { currentUser } = firebase.auth();
+  return (dispatch) => {
+    firebase.database().ref(`/Users/${currentUser.uid}`).update({
+      credit: amount
+    }).then(() => dispatch({ type: RELOAD_CREDIT_SUCCESS, payload: amount }))
+      .catch((error) => dispatch({ type: RELOAD_CREDIT_FAIL, payload: 'Purchase failed' }))
+  };
 };

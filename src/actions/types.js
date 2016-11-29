@@ -31,4 +31,14 @@ export const REJECT_PRODUCT_FAIL = 'reject_product_fail';
 export const DELETE_PRODUCT_SUCCESS = 'delete_product_success';
 export const DELETE_PRODUCT_FAIL = 'delete_product_fail';
 
+export const RESET_PURCHASE_MESSAGE = 'reset_purchase_message';
 export const RESET_APPROVE_MESSAGE = 'reset_approve_message';
+
+export const RELOAD_CREDIT_SUCCESS = 'reload_credit_success';
+export const RELOAD_CREDIT_FAIL = 'reload_credit_fail';
+
+export const ADD_TO_BASKET_SUCCESS = 'add_to_basket_success';
+export const ADD_TO_BASKET_FAIL = 'add_to_basket_fail';
+
+// export const UPDATE_BASKET_LIST_SUCCESS = 'update_basket_list_success';
+// export const UPDATE_BASKET_LIST_FAIL = 'update_basket_list_fail';

@@ -12,13 +12,15 @@ class BrandItemList extends Component {
 
   componentWillMount() {
     const {uid, ...product} = this.props.product
-    const newProduct = _.values(product);
+    const filteredProducts = _.pickBy(this.props.product, {'approved': true})
+    const newProduct = _.values(filteredProducts);
     this.createDataSource(newProduct);
   }
 
   componentWillReceiveProps(nextProps) {
     const {uid, ...product} = this.props.product
-    const newProduct = _.values(product);
+    const filteredProducts = _.pickBy(this.props.product, {'approved': true})
+    const newProduct = _.values(filteredProducts);
     this.createDataSource(newProduct);
   }
 

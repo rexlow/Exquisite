@@ -4,12 +4,17 @@ import {
   Alert,
   View,
   Text,
-  Image
+  Image,
+  ScrollView
 } from 'react-native';
 
 import { connect } from 'react-redux';
 import * as actions from './../../actions';
 import { Actions } from 'react-native-router-flux';
+
+import ActionButton from 'react-native-action-button';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+const basket = (<MaterialIcon name="local-grocery-store" size={33} color="white" />)
 
 const deviceWidth = require('Dimensions').get('window').width;
 const deviceHeight = require('Dimensions').get('window').height;
@@ -17,10 +22,21 @@ const deviceHeight = require('Dimensions').get('window').height;
 class ProductItemDetail extends Component {
 
   componentWillReceiveProps(nextProps) {
-    this.buyItemCallback(nextProps);
+    this.addItemToBasketCallback(nextProps);
   }
 
-  buyItemCallback(props) {
+  addItemToBasketHelper() {
+    Alert.alert(
+      'Message',
+      'Add this item to basket?',
+      [
+        {text: 'Yes', onPress: () => this.props.addToBasket(this.props.uid)},
+        {text: 'Cancel', onPress: () => console.log('cancel')}
+      ]
+    )
+  }
+
+  addItemToBasketCallback(props) {
     if (props.api.message) {
       const message = props.api.message;
       Alert.alert(
@@ -29,25 +45,50 @@ class ProductItemDetail extends Component {
       [
         {text: 'Return', onPress: () => console.log('Return after ticket reducer')}
       ]);
+      this.props.getUserGroup(); //pull entire user object to update basket
+      this.props.resetPurchaseMessage()
     }
   }
 
   render() {
     const { brand, category, color, description, imageURL, name, price, size } = this.props;
-    const { skeleton, centerEverything, container, contentContainer, imageContainer, imageStyle } = styles;
+    const { skeleton, centerEverything, container, contentContainer, imageContainer, imageStyle,
+    titleContainer, titleTextStyle, titleStyle, textContainer, textStyle, boldText, rowItem } = styles;
     return(
-      <View style={[centerEverything, container]}>
-        <View style={[imageContainer]}>
-          <Image
-            style={imageStyle}
-            source={{uri: imageURL}}
-          />
-        </View>
-        <View style={[contentContainer, skeleton]}>
-          <Text>{brand}</Text>
-          <Text>{category}</Text>
-          <Text>{color}</Text>
-        </View>
+      <View style={{flex: 1}}>
+        <ScrollView>
+          <View style={[centerEverything, container]}>
+            <View style={[imageContainer]}>
+              <Image
+                style={imageStyle}
+                source={{uri: imageURL}}
+              />
+            </View>
+            <View style={[contentContainer]}>
+              <View style={[titleContainer]}>
+                <Text style={titleStyle}>{name}</Text>
+                <Text style={titleTextStyle}> by {brand}</Text>
+              </View>
+              <View style={textContainer}>
+                <View style={rowItem}>
+                  <Text style={[textStyle, boldText]}> Category : </Text>
+                  <Text style={[textStyle]}>{category}</Text>
+                </View>
+                <Text style={textStyle}> Available Color : {color}</Text>
+                <Text style={textStyle}> Size : {size}</Text>
+                <Text style={textStyle}> Price : RM{price}</Text>
+                <Text style={textStyle}> Description : </Text>
+                <Text style={textStyle}> {description}</Text>
+              </View>
+            </View>
+          </View>
+        </ScrollView>
+        <ActionButton
+          buttonColor="rgba(139,195,74,1)"
+          offsetX={0}
+          offsetY={0}
+          icon={basket}
+          onPress={this.addItemToBasketHelper.bind(this)}/>
       </View>
     )
   }
@@ -69,6 +110,7 @@ const styles = {
   },
   contentContainer: {
     flex: 1,
+    width: deviceWidth*0.95
   },
   imageContainer: {
     top: 0,
@@ -83,10 +125,31 @@ const styles = {
     width: 240,
     height: 320
   },
+  titleContainer: {
+    flex:4,
+  },
+  titleStyle:{
+    fontSize:20,
+  },
+  titleTextStyle: {
+    fontSize:13,
+    color: '#ff0000',
+  },
+  textContainer: {
+    flex:6,
+  },
+  textStyle:{
+    fontSize:13,
+  },
+  boldText: {
+    fontWeight: '500'
+  },
+  rowItem: {
+    flexDirection: 'row'
+  }
 }
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     api: state.api
   }

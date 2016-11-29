@@ -46,19 +46,6 @@ class RouterComponent extends Component {
     this.props.listenToUser();
   }
 
-  buyItemHelper(props) {
-    Alert.alert(
-      'Purchase',
-      `Buy 1 ${props.name} \n with RM ${props.price}?`,
-      [
-        {text: 'Yes', onPress: () => {
-          this.props.buyItem(props.uid);
-        }},
-        {text: 'Cancel', onPress: () => console.log('buy item cancel')}
-      ]
-    )
-  }
-
   signOutHelper() {
     Alert.alert(
       'Sign out',
@@ -123,10 +110,7 @@ class RouterComponent extends Component {
             <Scene
               key="productItemDetail"
               component={ProductItemDetail}
-              leftButtonIconStyle={{tintColor: '#FFF'}}
-              rightTitle="Buy Item"
-              rightButtonTextStyle={{ color: '#FFF' }}
-              onRight={this.buyItemHelper.bind(this)} />
+              leftButtonIconStyle={{tintColor: '#FFF'}}/>
             <Scene
               key="brandItemList"
               component={BrandItemList}

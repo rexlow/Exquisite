@@ -14,6 +14,7 @@ import * as actions from './../../actions';
 
 import ActionButton from 'react-native-action-button';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+const purchased = (<MaterialIcon name="filter-vintage" size={33} color="white" />)
 const basket = (<MaterialIcon name="shopping-basket" size={33} color="white" />)
 
 import { Spinner } from './../../components/common';
@@ -71,6 +72,9 @@ class Home extends Component {
           }
         />
         <ActionButton buttonColor="#e74c3c" offsetX={0} offsetY={0}>
+          <ActionButton.Item buttonColor='#f442cb' title="View Purchased Item" onPress={() => Actions.purchasedItem()}>
+            {purchased}
+          </ActionButton.Item>
           <ActionButton.Item buttonColor='#9b59b6' title="My basket" onPress={() => Actions.basket()}>
             {basket}
           </ActionButton.Item>
@@ -102,13 +106,13 @@ const styles = {
 }
 
 const mapStateToProps = (state) => {
+  console.log(state);
   const filteredProducts = _.pickBy(state.api.productList, {'approved': true})
 
   const products = _.map(filteredProducts, (val, uid) => {
     return {...val, uid};
   })
 
-  console.log(products);
   return { products };
 }
 

@@ -4,7 +4,9 @@ import {
   STORE_ARTWORK_TEMPORARILY,
   GET_USER_GROUP,
   PRODUCT_ADDED_SUCCESS,
-  PRODUCT_ADDED_FAIL
+  PRODUCT_ADDED_FAIL,
+  RELOAD_CREDIT_SUCCESS,
+  RELOAD_CREDIT_FAIL
  } from './../actions/types';
 
 const INITIAL_STATE = {
@@ -29,6 +31,10 @@ export default (state = INITIAL_STATE, action) => {
     case PRODUCT_ADDED_SUCCESS:
       return { ...state, message: action.payload }
     case PRODUCT_ADDED_FAIL:
+      return { ...state, message: action.payload }
+    case RELOAD_CREDIT_SUCCESS:
+      return { ...state, message: 'Reload credit success!', credit: action.payload }
+    case RELOAD_CREDIT_FAIL:
       return { ...state, message: action.payload }
     case REHYDRATE:
       var incoming = action.payload.profile;

@@ -2,7 +2,10 @@ import firebase from 'firebase';
 import {
   PULL_PRODUCT_DATA,
   BUY_ITEM_SUCCESS,
-  BUY_ITEM_FAIL
+  BUY_ITEM_FAIL,
+  RESET_PURCHASE_MESSAGE,
+  ADD_TO_BASKET_SUCCESS,
+  ADD_TO_BASKET_FAIL,
 } from './types';
 
 export function pullProductData() {
@@ -29,3 +32,18 @@ export function buyItem(productID) {
       .catch(() => console.log('error'));
   };
 }
+
+export function resetPurchaseMessage() {
+  return {
+    type: RESET_PURCHASE_MESSAGE
+  };
+};
+
+export function addToBasket(productID) {
+  const { currentUser } = firebase.auth();
+  return (dispatch) => {
+    firebase.database().ref(`/Users/${currentUser.uid}/basketList`).update({ [productID]: true })
+      .then(() => dispatch({ type: ADD_TO_BASKET_SUCCESS, payload: 'Product added into basket' }))
+      .catch(() => dispatch({ type: ADD_TO_BASKET_FAIL, payload: 'Sorry, please try again later' }))
+  };
+};
