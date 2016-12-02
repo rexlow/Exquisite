@@ -98,7 +98,6 @@ export function registerUser(email, password, firstName, lastName) {
 
 export function signOut() {
   firebase.auth().signOut();
-  Actions.auth({ type: 'reset' });
   return {
     type: SIGNOUT_USER
   };

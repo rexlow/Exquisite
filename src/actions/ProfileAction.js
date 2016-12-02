@@ -8,8 +8,20 @@ import {
   PRODUCT_ADDED_SUCCESS,
   PRODUCT_ADDED_FAIL,
   RELOAD_CREDIT_SUCCESS,
-  RELOAD_CREDIT_FAIL
+  RELOAD_CREDIT_FAIL,
+  UPDATE_USER_PROFILE_SUCCESS,
+  UPDATE_USER_PROFILE_FAIL,
+  UPDATE_USER_PASSWORD_SUCCESS,
+  UPDATE_USER_PASSWORD_FAIL
 } from './types';
+
+const profileUpdate = {
+  message: 'Your profile is being updated'
+};
+
+const passwordChangeSuccess = {
+  message: 'Password updated'
+};
 
 //talk to database and get user group
 export function getUserGroup() {
@@ -77,3 +89,25 @@ export function reloadCredit(amount) {
       .catch((error) => dispatch({ type: RELOAD_CREDIT_FAIL, payload: 'Purchase failed' }))
   };
 };
+
+export function updateProfile(firstName, lastName, newPassword) {
+  const { currentUser } = firebase.auth();
+  return (dispatch) => {
+    if (newPassword !== '') {
+      currentUser.updatePassword(newPassword)
+        .then(() => dispatch({ type: UPDATE_USER_PASSWORD_SUCCESS, payload: 'Your profile is being updated' }))
+        .catch((error) => dispatch({ type: UPDATE_USER_PASSWORD_FAIL, payload: error.message }));
+    }
+    //update user database
+    firebase.database().ref(`/Users/${currentUser.uid}`).update({
+      firstName: firstName,
+      lastName: lastName,
+    })
+      .then(() => {
+        currentUser.updateProfile({ displayName: [firstName] + ' ' + [lastName] })
+          .then(() => dispatch({ type: UPDATE_USER_PROFILE_SUCCESS, payload: {profileUpdate, userGroup: {firstName, lastName}}}))
+          .catch((error) => dispatch({ type: UPDATE_USER_PROFILE_FAIL, payload: error.message }))
+        })
+      .catch((error) => dispatch({ type: UPDATE_USER_PROFILE_FAIL, payload: error.message }));
+  }
+}

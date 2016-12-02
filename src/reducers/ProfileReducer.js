@@ -6,7 +6,11 @@ import {
   PRODUCT_ADDED_SUCCESS,
   PRODUCT_ADDED_FAIL,
   RELOAD_CREDIT_SUCCESS,
-  RELOAD_CREDIT_FAIL
+  RELOAD_CREDIT_FAIL,
+  UPDATE_USER_PROFILE_SUCCESS,
+  UPDATE_USER_PROFILE_FAIL,
+  UPDATE_USER_PASSWORD_SUCCESS,
+  UPDATE_USER_PASSWORD_FAIL
  } from './../actions/types';
 
 const INITIAL_STATE = {
@@ -35,6 +39,14 @@ export default (state = INITIAL_STATE, action) => {
     case RELOAD_CREDIT_SUCCESS:
       return { ...state, message: 'Reload credit success!', credit: action.payload }
     case RELOAD_CREDIT_FAIL:
+      return { ...state, message: action.payload }
+    case UPDATE_USER_PROFILE_SUCCESS:
+      return { ...state, userGroup: { firstName: action.payload.userGroup.firstName, lastName: action.payload.userGroup.lastName }, message: action.payload.profileUpdate.message}
+    case UPDATE_USER_PROFILE_FAIL:
+      return { ...state, message: action.payload }
+    case UPDATE_USER_PASSWORD_SUCCESS:
+      return { ...state, message: action.payload }
+    case UPDATE_USER_PASSWORD_FAIL:
       return { ...state, message: action.payload }
     case REHYDRATE:
       var incoming = action.payload.profile;

@@ -16,7 +16,7 @@ import ActionButton from 'react-native-action-button';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 const creditCard = (<MaterialIcon name="credit-card" size={33} color="white" />)
 
-import ProductItem from './../../components/ProductItem';
+import BasketItem from './../../components/BasketItem';
 
 const deviceWidth = require('Dimensions').get('window').width;
 const deviceHeight = require('Dimensions').get('window').height;
@@ -30,7 +30,6 @@ class Basket extends Component {
 
   componentDidMount() {
     if (this.props.basketItem) {
-      console.log(this.props.basketItem);
       this.calculatePrice()
     }
   }
@@ -50,7 +49,7 @@ class Basket extends Component {
   }
 
   renderRow(product) {
-    return <ProductItem product={product} />;
+    return <BasketItem product={product} />;
   }
 
   onRefresh = () => {
@@ -65,7 +64,7 @@ class Basket extends Component {
       [
         {text: 'Yes', onPress: () => {
           if (this.props.profile.userGroup.credit >= this.state.totalPrice) {
-            console.log('can buy');
+            console.log(this.props.basketItem);
           } else {
             Alert.alert(
               'Oops', 'Insufficient credit. Please reload and try again'
@@ -83,7 +82,7 @@ class Basket extends Component {
     for (var i = 0; i < basketItem.length; i++) {
       totalPrice += basketItem[i].price
     }
-    roundedPrice = _.round(totalPrice, 2)
+    var roundedPrice = _.round(totalPrice, 2)
     this.setState({ totalItem: basketItem.length, totalPrice: roundedPrice })
   }
 
@@ -156,6 +155,7 @@ const styles = {
   },
   contentContainer: {
     flex: 8,
+    marginBottom: 50
   },
   titleContainer: {
     width: deviceWidth*0.8,

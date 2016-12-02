@@ -15,14 +15,13 @@ import ActionButton from 'react-native-action-button';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 const add = (<MaterialIcon name="add" size={33} color="white" />)
 const money = (<MaterialIcon name="attach-money" size={33} color="white" />)
-
+const account = (<MaterialIcon name="account-circle" size={33} color="white" />)
 const storage = (<MaterialIcon name="details" size={33} color="white" />)
 
 class Profile extends Component {
 
   constructor(props) {
     super(props)
-    console.log(props.profile);
     this.state = {
       userCredit: props.profile.credit
     }
@@ -70,6 +69,9 @@ class Profile extends Component {
           <ActionButton.Item buttonColor='orange' title="Reload Credit" onPress={() => this.reloadCreditPromptHelper()}>
             {money}
           </ActionButton.Item>
+          <ActionButton.Item buttonColor='orange' title="Edit Profile" onPress={() => Actions.editProfile()}>
+            {account}
+          </ActionButton.Item>
         </ActionButton>
       )
     } else {
@@ -77,6 +79,9 @@ class Profile extends Component {
         <ActionButton buttonColor="#e74c3c" offsetX={0} offsetY={0}>
           <ActionButton.Item buttonColor='orange' title="Reload Credit" onPress={() => Actions.addProduct()}>
             {money}
+          </ActionButton.Item>
+          <ActionButton.Item buttonColor='orange' title="Edit Profile" onPress={() => Actions.editProfile()}>
+            {account}
           </ActionButton.Item>
         </ActionButton>
       )

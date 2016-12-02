@@ -20,6 +20,7 @@ import ResetPassword from './containers/AuthContainer/ResetPassword';
 import Home from './containers/MainContainer/Home';
 import Brand from './containers/MainContainer/Brand';
 import Profile from './containers/MainContainer/Profile';
+import EditProfile from './containers/MainContainer/EditProfile';
 
 import Basket from './containers/MainContainer/Basket';
 
@@ -53,6 +54,7 @@ class RouterComponent extends Component {
       [
         {text: 'Yes', onPress: () => {
           this.props.signOut();
+          Actions.auth({ type: 'reset' });
         }},
         {text: 'Cancel', onPress: () => console.log('sign out cancel')}
       ]
@@ -91,6 +93,10 @@ class RouterComponent extends Component {
                 rightButtonTextStyle={{ color: '#FFF' }}
                 onRight={this.signOutHelper.bind(this)} />
             </Scene>
+            <Scene
+              key="editProfile"
+              component={EditProfile}
+              leftButtonIconStyle={{tintColor: '#FFF'}} />
             <Scene
               key="basket"
               component={Basket}

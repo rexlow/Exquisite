@@ -6,6 +6,8 @@ import {
   RESET_PURCHASE_MESSAGE,
   ADD_TO_BASKET_SUCCESS,
   ADD_TO_BASKET_FAIL,
+  REMOVE_ITEM_FROM_BASKET_SUCCESS,
+  REMOVE_ITEM_FROM_BASKET_FAIL
 } from './types';
 
 export function pullProductData() {
@@ -45,5 +47,14 @@ export function addToBasket(productID) {
     firebase.database().ref(`/Users/${currentUser.uid}/basketList`).update({ [productID]: true })
       .then(() => dispatch({ type: ADD_TO_BASKET_SUCCESS, payload: 'Product added into basket' }))
       .catch(() => dispatch({ type: ADD_TO_BASKET_FAIL, payload: 'Sorry, please try again later' }))
+  };
+};
+
+export function removeFromBasket(productID) {
+  const { currentUser } = firebase.auth();
+  return (dispatch) => {
+    firebase.database().ref(`/Users/${currentUser.uid}/basketList/${productID}`).remove()
+      .then(() => dispatch({ type: REMOVE_ITEM_FROM_BASKET_SUCCESS }))
+      .catch((error) => dispatch({ type: REMOVE_ITEM_FROM_BASKET_FAIL, payload: 'Something went wrong'}))
   };
 };

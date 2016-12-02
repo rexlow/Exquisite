@@ -40,5 +40,14 @@ export const RELOAD_CREDIT_FAIL = 'reload_credit_fail';
 export const ADD_TO_BASKET_SUCCESS = 'add_to_basket_success';
 export const ADD_TO_BASKET_FAIL = 'add_to_basket_fail';
 
+export const REMOVE_ITEM_FROM_BASKET_SUCCESS = 'remove_item_from_basket_success';
+export const REMOVE_ITEM_FROM_BASKET_FAIL = 'remove_item_from_basket_fail';
+
+export const UPDATE_USER_PROFILE_SUCCESS = 'update_user_profile_success';
+export const UPDATE_USER_PROFILE_FAIL = 'update_user_profile_fail';
+
+export const UPDATE_USER_PASSWORD_SUCCESS = 'update_user_password_success';
+export const UPDATE_USER_PASSWORD_FAIL = 'update_user_password_fail';
+
 // export const UPDATE_BASKET_LIST_SUCCESS = 'update_basket_list_success';
 // export const UPDATE_BASKET_LIST_FAIL = 'update_basket_list_fail';
