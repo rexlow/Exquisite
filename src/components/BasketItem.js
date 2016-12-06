@@ -28,7 +28,6 @@ class BasketItem extends Component {
   }
 
   render() {
-    console.log(this.props.product);
     const { name, price, imageURL } = this.props.product;
     const { skeleton, centerEverything, container, imageContainer, textContainer, imageStyle, textStyle, boldText } = styles;
     return(

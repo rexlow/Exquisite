@@ -195,12 +195,16 @@ const styles = {
 
 const mapStateToProps = (state) => {
   var basketItem = []
-  if (state.profile.userGroup.basketList) {
-    let unfilteredBasketItem = state.profile.userGroup.basketList
-    let availableItem = state.api.productList
+  const availableItem = state.api.productList
+  const unfilteredBasketItem = state.profile.userGroup.basketList
 
-    Object.keys(availableItem).forEach(
-      (key) => unfilteredBasketItem[key] && (basketItem.push({ ...availableItem[key] }))
+  const mapItem = _.mapValues(availableItem, (val, uid) => {
+    return { ...val, uid }
+  })
+
+  if (unfilteredBasketItem) {
+    Object.keys(unfilteredBasketItem).forEach(
+      (key) => unfilteredBasketItem[key] && (basketItem.push({ ...mapItem[key] }))
     )
   }
 
