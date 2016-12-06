@@ -36,8 +36,26 @@ class Basket extends Component {
 
   componentWillReceiveProps(nextProps) {
     this.createDataSource(nextProps);
+
     if (nextProps) {
       this.setState({ isRefreshing: false })
+
+    }
+    if(nextProps.api) {
+      this.removeFromBasketCallback(nextProps.api)
+      this.props.getUserGroup() //update basket view
+      this.calculatePrice()
+    }
+  }
+
+  removeFromBasketCallback(props) {
+    if (props.message) {
+      Alert.alert(
+        'Message',
+        props.message
+      )
+      this.props.resetPurchaseMessage()
+
     }
   }
 
@@ -77,6 +95,7 @@ class Basket extends Component {
   }
 
   calculatePrice() {
+    console.log('calculating....');
     let basketItem = this.props.basketItem
     var totalPrice = 0
     for (var i = 0; i < basketItem.length; i++) {
@@ -194,6 +213,7 @@ const styles = {
 }
 
 const mapStateToProps = (state) => {
+  console.log(state);
   var basketItem = []
   const availableItem = state.api.productList
   const unfilteredBasketItem = state.profile.userGroup.basketList
@@ -208,7 +228,7 @@ const mapStateToProps = (state) => {
     )
   }
 
-  return { basketItem, profile: state.profile }
+  return { basketItem, profile: state.profile, api: state.api }
 }
 
 export default connect(mapStateToProps, actions)(Basket);

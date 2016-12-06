@@ -106,7 +106,7 @@ const styles = {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state);
+  // console.log(state);
   const filteredProducts = _.pickBy(state.api.productList, {'approved': true})
 
   const products = _.map(filteredProducts, (val, uid) => {

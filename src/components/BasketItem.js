@@ -21,14 +21,14 @@ class BasketItem extends Component {
       'Alert',
       'Remove this item from your basket?',
       [
-        {text: 'Ok', onPress: () => console.log('remove item')},
+        {text: 'Ok', onPress: () => this.props.removeFromBasket(this.props.product.uid)},
         {text: 'Cancel', onPress: () => console.log('cancel')}
       ]
     )
   }
 
   render() {
-    const { name, price, imageURL } = this.props.product;
+    const { name, price, imageURL, uid } = this.props.product;
     const { skeleton, centerEverything, container, imageContainer, textContainer, imageStyle, textStyle, boldText } = styles;
     return(
       <TouchableWithoutFeedback onPress={() => this.removeFromBasketHelper()}>

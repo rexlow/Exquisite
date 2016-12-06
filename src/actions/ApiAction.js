@@ -54,7 +54,7 @@ export function removeFromBasket(productID) {
   const { currentUser } = firebase.auth();
   return (dispatch) => {
     firebase.database().ref(`/Users/${currentUser.uid}/basketList/${productID}`).remove()
-      .then(() => dispatch({ type: REMOVE_ITEM_FROM_BASKET_SUCCESS }))
+      .then(() => dispatch({ type: REMOVE_ITEM_FROM_BASKET_SUCCESS, payload: 'Product removed!' }))
       .catch((error) => dispatch({ type: REMOVE_ITEM_FROM_BASKET_FAIL, payload: 'Something went wrong'}))
   };
 };

@@ -67,6 +67,7 @@ export function submitProduct(brand, category, color, description, imageToUpload
   const { currentUser } = firebase.auth();
   return (dispatch) => {
     firebase.database().ref(`/Product/`).push({
+      approved: false,
       brand: brand,
       category: category,
       color: color,

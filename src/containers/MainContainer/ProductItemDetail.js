@@ -22,6 +22,7 @@ const deviceHeight = require('Dimensions').get('window').height;
 class ProductItemDetail extends Component {
 
   componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
     this.addItemToBasketCallback(nextProps);
   }
 

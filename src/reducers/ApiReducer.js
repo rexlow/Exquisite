@@ -6,7 +6,9 @@ import {
   BUY_ITEM_FAIL,
   RESET_PURCHASE_MESSAGE,
   ADD_TO_BASKET_SUCCESS,
-  ADD_TO_BASKET_FAIL
+  ADD_TO_BASKET_FAIL,
+  REMOVE_ITEM_FROM_BASKET_SUCCESS,
+  REMOVE_ITEM_FROM_BASKET_FAIL
  } from './../actions/types';
 
  import { REHYDRATE } from 'redux-persist/constants'
@@ -27,6 +29,10 @@ export default (state = INITIAL_STATE, action) => {
     case ADD_TO_BASKET_SUCCESS:
       return { ...state, message: action.payload }
     case ADD_TO_BASKET_FAIL:
+      return { ...state, message: action.payload }
+    case REMOVE_ITEM_FROM_BASKET_SUCCESS:
+      return { ...state, message: action.payload }
+    case REMOVE_ITEM_FROM_BASKET_FAIL:
       return { ...state, message: action.payload }
     case REHYDRATE:
       var incoming = action.payload.api; //return double object, one for online one for local
