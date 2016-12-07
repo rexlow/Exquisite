@@ -38,8 +38,9 @@ class Profile extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.profile.credit) {
-      this.setState({ userCredit: nextProps.profile.credit})
+    console.log(nextProps);
+    if (nextProps.profile.userGroup.credit) {
+      this.setState({ userCredit: nextProps.profile.userGroup.credit})
     }
 
     if (nextProps.profile.message) {

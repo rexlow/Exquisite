@@ -85,40 +85,44 @@ class Basket extends Component {
     const { credit, purchasedItem } = this.props.profile.userGroup
     const basketItem = this.props.basketItem
 
-    Alert.alert(
-      'Check out',
-      `Buy ${this.state.totalItem} items with total price of \n RM ${this.state.totalPrice}?`,
-      [
-        {text: 'Yes', onPress: () => {
-          if (credit >= this.state.totalPrice) {
-            var purchasedItemVar = {}
-            var basketObject = _.mapValues(basketItem, (val, index) => {
-              return { ...val, index }
-            })
+    if (_.isEmpty(basketItem)) {
+      Alert.alert(
+        'Oops',
+        'Your basket is currently empty'
+      )
+    } else {
+      Alert.alert(
+        'Check out',
+        `Buy ${this.state.totalItem} items with total price of \n RM ${this.state.totalPrice}?`,
+        [
+          {text: 'Yes', onPress: () => {
+            if (credit >= this.state.totalPrice) {
+              var purchasedItemVar = {}
+              var basketObject = _.mapValues(basketItem, (val, index) => {
+                return { ...val, index }
+              })
 
-            if (purchasedItem) {
-              purchasedItemVar = purchasedItem
+              if (purchasedItem) {
+                purchasedItemVar = purchasedItem
+              }
+
+              _.mapValues(basketObject, (val) => {
+                purchasedItemVar[val.uid] = true
+              })
+
+              const remainingCredit = this.props.profile.userGroup.credit - this.state.totalPrice
+              const roundedPrice = _.round(remainingCredit, 2)
+              this.props.buyItemArray(purchasedItemVar, roundedPrice, basketObject)
+            } else {
+              Alert.alert(
+                'Oops', 'Insufficient credit. Please reload and try again'
+              )
             }
-
-            _.mapValues(basketObject, (val) => {
-              purchasedItemVar[val.uid] = true
-            })
-
-            console.log(basketItem);
-            console.log(purchasedItem);
-            console.log(purchasedItemVar);
-
-            const remainingCredit = this.props.profile.userGroup.credit - this.state.totalPrice
-            this.props.buyItemArray(purchasedItemVar, remainingCredit, basketObject)
-          } else {
-            Alert.alert(
-              'Oops', 'Insufficient credit. Please reload and try again'
-            )
-          }
-        }},
-        {text: 'Cancel', onPress: () => console.log('buy item cancel')}
-      ]
-    )
+          }},
+          {text: 'Cancel', onPress: () => console.log('buy item cancel')}
+        ]
+      )
+    }
   }
 
   calculatePrice() {
