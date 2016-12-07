@@ -58,9 +58,9 @@ class Profile extends Component {
         'Message',
         nextProps.profile.message
       )
+      this.props.getUserGroup()
       this.props.resetMessage()
     }
-    this.props.getUserGroup()
   }
 
   createDataSource({ products }) {

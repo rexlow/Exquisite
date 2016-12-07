@@ -32,7 +32,6 @@ export function getUserGroup() {
         var userData = _.values(snapshot.val());
         for (var i = 0; i < userData.length; i++) {
           if (userData[i].email === currentUser.email) {
-            console.log(userData[i]);
             dispatch({
               type: GET_USER_GROUP,
               payload: userData[i]
