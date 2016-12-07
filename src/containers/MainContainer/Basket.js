@@ -12,6 +12,12 @@ import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import * as actions from './../../actions';
 
+import LinearGradient from 'react-native-linear-gradient';
+const gradient = {
+  gradientStart: [0.3, 1],
+  gradientEnd: [1, 0.8]
+}
+
 import ActionButton from 'react-native-action-button';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 const creditCard = (<MaterialIcon name="credit-card" size={33} color="white" />)
@@ -76,13 +82,34 @@ class Basket extends Component {
   }
 
   checkOutHelper(props) {
+    const { credit, purchasedItem } = this.props.profile.userGroup
+    const basketItem = this.props.basketItem
+
     Alert.alert(
       'Check out',
-      `Buy ${this.state.totalItem} items with total price of RM ${this.state.totalPrice}?`,
+      `Buy ${this.state.totalItem} items with total price of \n RM ${this.state.totalPrice}?`,
       [
         {text: 'Yes', onPress: () => {
-          if (this.props.profile.userGroup.credit >= this.state.totalPrice) {
-            console.log(this.props.basketItem);
+          if (credit >= this.state.totalPrice) {
+            var purchasedItemVar = {}
+            var basketObject = _.mapValues(basketItem, (val, index) => {
+              return { ...val, index }
+            })
+
+            if (purchasedItem) {
+              purchasedItemVar = purchasedItem
+            }
+
+            _.mapValues(basketObject, (val) => {
+              purchasedItemVar[val.uid] = true
+            })
+
+            console.log(basketItem);
+            console.log(purchasedItem);
+            console.log(purchasedItemVar);
+
+            const remainingCredit = this.props.profile.userGroup.credit - this.state.totalPrice
+            this.props.buyItemArray(purchasedItemVar, remainingCredit, basketObject)
           } else {
             Alert.alert(
               'Oops', 'Insufficient credit. Please reload and try again'
@@ -135,10 +162,16 @@ class Basket extends Component {
             }
           />
         </View>
-        <View style={basketStatusContainer}>
-          <Text style={basketStatusText}>{this.state.totalItem} items in the basket</Text>
-          <Text style={basketStatusText}>RM {this.state.totalPrice}</Text>
-        </View>
+        <LinearGradient
+          colors={['#f49542', '#ffd34f']}
+          start={gradient.gradientStart}
+          end={gradient.gradientEnd}
+          style={styles.basketStatusContainer}>
+          <View>
+            <Text style={basketStatusText}>{this.state.totalItem} items in the basket</Text>
+            <Text style={basketStatusText}>RM {this.state.totalPrice}</Text>
+          </View>
+        </LinearGradient>
         <ActionButton
           buttonColor="rgb(101, 14, 249)"
           offsetX={0}
@@ -200,11 +233,12 @@ const styles = {
     bottom: 0,
     width: deviceWidth,
     height: 50,
-    backgroundColor: '#221F1F',
+    // backgroundColor: '#221F1F',
     justifyContent: 'center'
   },
   basketStatusText: {
     color: 'white',
+    backgroundColor: 'transparent',
     fontSize: 14,
     fontFamily: 'Helvetica Neue',
     paddingLeft: 10,
@@ -213,7 +247,6 @@ const styles = {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state);
   var basketItem = []
   const availableItem = state.api.productList
   const unfilteredBasketItem = state.profile.userGroup.basketList

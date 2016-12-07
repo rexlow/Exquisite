@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import firebase from 'firebase';
 import {
   PULL_PRODUCT_DATA,
@@ -33,6 +34,39 @@ export function buyItem(productID) {
       .then(() => console.log('update product parent'))
       .catch(() => console.log('error'));
   };
+}
+
+//todo
+export function buyItemArray(products, remainingCredit, basketObject) {
+  const { currentUser } = firebase.auth();
+  return (dispatch) => {
+    console.log(products);
+    console.log(remainingCredit);
+    console.log(basketObject);
+
+    Object.keys(basketObject).forEach(
+      (key) => console.log(basketObject[key].uid)
+    )
+
+    // update purchasedItem node
+    firebase.database().ref(`Users/${currentUser.uid}`).update({
+      purchasedItem: products,
+      credit: remainingCredit
+    })
+    .then(() => {
+      //update purchasedUser node with looping, might cause Firebase complain
+      Object.keys(basketObject).forEach((key) =>
+        firebase.database().ref(`Product/${basketObject[key].uid}/purchasedUser`).update({ [currentUser.uid]: true })
+          .then(() => console.log('done adding user to purchasedUser'))
+          .catch((error) => console.log(error.message))
+      )
+      //remove basket items
+      firebase.database().ref(`Users/${currentUser.uid}/basketList`).remove()
+        .then(() => dispatch({ type: BUY_ITEM_SUCCESS, payload: 'Purchase item successfully' }))
+        .catch((error) => console.log(error.message))
+    })
+    .catch(() => dispatch({ type: BUY_ITEM_FAIL, payload: 'Sorry, please try again later' }));
+  }
 }
 
 export function resetPurchaseMessage() {

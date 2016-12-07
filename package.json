@@ -15,6 +15,7 @@
     "react-native-button-component": "0.0.5",
     "react-native-fetch-blob": "^0.10.0",
     "react-native-image-picker": "^0.22.13",
+    "react-native-linear-gradient": "^1.5.15",
     "react-native-router-flux": "^3.36.0",
     "react-native-vector-icons": "^2.1.0",
     "react-redux": "^4.4.5",

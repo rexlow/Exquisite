@@ -11,19 +11,29 @@ import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import * as actions from './../../actions';
 
+import LinearGradient from 'react-native-linear-gradient';
+const gradient = {
+  gradientStart: [0.3, 1],
+  gradientEnd: [1, 0.8]
+}
+
 import ActionButton from 'react-native-action-button';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 const add = (<MaterialIcon name="add" size={33} color="white" />)
 const money = (<MaterialIcon name="attach-money" size={33} color="white" />)
 const account = (<MaterialIcon name="account-circle" size={33} color="white" />)
 const storage = (<MaterialIcon name="details" size={33} color="white" />)
+const equalizer = (<MaterialIcon name="equalizer" size={33} color="white" />)
+
+const deviceWidth = require('Dimensions').get('window').width;
+const deviceHeight = require('Dimensions').get('window').height;
 
 class Profile extends Component {
 
   constructor(props) {
     super(props)
     this.state = {
-      userCredit: props.profile.credit
+      userCredit: props.profile.userGroup.credit
     }
   }
 
@@ -59,7 +69,7 @@ class Profile extends Component {
   renderAdminButton() {
     if (this.props.profile.userType === 'Admin') {
       return (
-        <ActionButton buttonColor="#e74c3c" offsetX={0} offsetY={0}>
+        <ActionButton buttonColor="#3881f7" offsetX={0} offsetY={0} icon={equalizer}>
           <ActionButton.Item buttonColor='#9b59b6' title="Add Product" onPress={() => Actions.addProduct()}>
             {add}
           </ActionButton.Item>
@@ -76,7 +86,7 @@ class Profile extends Component {
       )
     } else {
       return (
-        <ActionButton buttonColor="#e74c3c" offsetX={0} offsetY={0}>
+        <ActionButton buttonColor="#3881f7" offsetX={0} offsetY={0} icon={equalizer}>
           <ActionButton.Item buttonColor='orange' title="Reload Credit" onPress={() => Actions.addProduct()}>
             {money}
           </ActionButton.Item>
@@ -90,17 +100,27 @@ class Profile extends Component {
 
   render() {
     const { skeleton, skeletonBlue, centerEverything, container, profileContainer, contentContainer,
-    titleStyle,titleSmallStyle } = styles;
+    titleStyle,titleSmallStyle, basketStatusContainer, basketStatusText } = styles;
     return(
       <View style={[centerEverything, container]}>
-        {this.renderAdminButton()}
         <View style={[profileContainer, centerEverything]}>
-          <Text style={titleStyle}>Hello {this.props.profile.userGroup.firstName} {this.props.profile.userGroup.lastName}</Text>
-          <Text style={titleSmallStyle}>Credit available: RM {this.state.userCredit}</Text>
+
         </View>
         <View style={[contentContainer]}>
 
         </View>
+        <LinearGradient
+          colors={['#f49542', '#ffd34f']}
+          start={gradient.gradientStart}
+          end={gradient.gradientEnd}
+          style={styles.basketStatusContainer}>
+          <View>
+            <Text style={basketStatusText}>Hello {this.props.profile.userGroup.firstName} {this.props.profile.userGroup.lastName}</Text>
+            <Text style={basketStatusText}>Credit Available: RM {this.state.userCredit}</Text>
+          </View>
+        </LinearGradient>
+
+        {this.renderAdminButton()}
       </View>
     )
   }
@@ -143,6 +163,22 @@ const styles = {
     fontWeight: '300',
     paddingTop: 5,
     backgroundColor: 'transparent'
+  },
+  basketStatusContainer: {
+    position: 'absolute',
+    bottom: 0,
+    width: deviceWidth,
+    height: 50,
+    // backgroundColor: '#221F1F',
+    justifyContent: 'center'
+  },
+  basketStatusText: {
+    color: 'white',
+    backgroundColor: 'transparent',
+    fontSize: 14,
+    fontFamily: 'Helvetica Neue',
+    paddingLeft: 10,
+    fontWeight: '500'
   }
 }
 
