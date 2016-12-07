@@ -1,38 +1,31 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import {
+  Alert,
   View,
   Text,
   ListView,
-  RefreshControl,
-  TouchableWithoutFeedback
+  RefreshControl
 } from 'react-native';
 
-import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import * as actions from './../../actions';
 
-import ActionButton from 'react-native-action-button';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-const basket = (<MaterialIcon name="shopping-basket" size={33} color="white" />)
+import ManageProductItem from './../../components/ManageProductItem';
 
-import { Spinner } from './../../components/common';
-import ProductItem from './../../components/ProductItem';
+class Performance extends Component {
 
-class Home extends Component {
-
-  state = { isRefreshing: false, userType: 'normalUser' }
+  state = { isRefreshing: false }
 
   componentWillMount() {
-    this.props.getUserGroup();
-    this.props.pullProductData();
     this.createDataSource(this.props);
   }
 
   componentWillReceiveProps(nextProps) {
-    this.createDataSource(nextProps);
-    if (nextProps) {
-      this.setState({ isRefreshing: false })
+    if (nextProps.admin.adminMessage !== null) {
+      Alert.alert('Successful', nextProps.admin.adminMessage)
+      this.createDataSource(this.props)
+      this.props.resetApproveMessage();
     }
   }
 
@@ -44,7 +37,7 @@ class Home extends Component {
   }
 
   renderRow(product) {
-    return <ProductItem product={product} />;
+    return <ManageProductItem product={product} />;
   }
 
   onRefresh = () => {
@@ -70,12 +63,6 @@ class Home extends Component {
             />
           }
         />
-      <ActionButton
-        buttonColor="#7B68EE"
-        offsetX={0}
-        offsetY={0}
-        icon={basket}
-        onPress={() => Actions.basket()} />
       </View>
     )
   }
@@ -88,7 +75,7 @@ const styles = {
   },
   container: {
     flex: 1,
-    marginTop: 110,
+    marginTop: 80,
   },
   listViewContainer: {
     justifyContent: 'center',
@@ -103,14 +90,10 @@ const styles = {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state);
-  const filteredProducts = _.pickBy(state.api.productList, {'approved': true})
-
-  const products = _.map(filteredProducts, (val, uid) => {
+  const products = _.map(state.api.productList, (val, uid) => {
     return {...val, uid};
   })
-
-  return { products };
+  return { products: products, admin: state.admin };
 }
 
-export default connect(mapStateToProps, actions)(Home);
+export default connect(mapStateToProps, actions)(Performance);

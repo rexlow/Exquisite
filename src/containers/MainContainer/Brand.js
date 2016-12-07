@@ -14,9 +14,7 @@ import * as actions from './../../actions';
 
 import ActionButton from 'react-native-action-button';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-const purchased = (<MaterialIcon name="filter-vintage" size={33} color="white" />)
 const basket = (<MaterialIcon name="shopping-basket" size={33} color="white" />)
-const redeem = (<MaterialIcon name="redeem" size={33} color="white" />)
 
 import ProductItem from './../../components/ProductItem';
 import BrandItem from './../../components/BrandItem';
@@ -70,14 +68,12 @@ class Brand extends Component {
             />
           }
         />
-      <ActionButton buttonColor="#1E90FF" offsetX={0} offsetY={0} icon={redeem}>
-          <ActionButton.Item buttonColor='#FF69B4' title="View Purchased Item" onPress={() => Actions.purchasedItem()}>
-            {purchased}
-          </ActionButton.Item>
-          <ActionButton.Item buttonColor='#7B68EE' title="My basket" onPress={() => Actions.basket()}>
-            {basket}
-          </ActionButton.Item>
-        </ActionButton>
+        <ActionButton
+          buttonColor="#7B68EE"
+          offsetX={0}
+          offsetY={0}
+          icon={basket}
+          onPress={() => Actions.basket()} />
       </View>
     )
   }

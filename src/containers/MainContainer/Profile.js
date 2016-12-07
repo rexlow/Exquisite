@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import {
   Alert,
   AlertIOS,
+  ListView,
+  RefreshControl,
   View,
   Text
 } from 'react-native';
@@ -10,6 +12,8 @@ import {
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import * as actions from './../../actions';
+
+import PurchasedItem from './../../components/PurchasedItem';
 
 import LinearGradient from 'react-native-linear-gradient';
 const gradient = {
@@ -19,11 +23,12 @@ const gradient = {
 
 import ActionButton from 'react-native-action-button';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+const apps = (<MaterialIcon name="apps" size={33} color="white" />)
 const add = (<MaterialIcon name="add" size={33} color="white" />)
 const money = (<MaterialIcon name="attach-money" size={33} color="white" />)
 const account = (<MaterialIcon name="account-circle" size={33} color="white" />)
 const storage = (<MaterialIcon name="details" size={33} color="white" />)
-const equalizer = (<MaterialIcon name="equalizer" size={33} color="white" />)
+const performance = (<MaterialIcon name="equalizer" size={33} color="white" />)
 
 const deviceWidth = require('Dimensions').get('window').width;
 const deviceHeight = require('Dimensions').get('window').height;
@@ -33,12 +38,17 @@ class Profile extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      userCredit: props.profile.userGroup.credit
+      userCredit: props.profile.userGroup.credit,
+      isRefreshing: false
     }
   }
 
+  componentWillMount() {
+    this.createDataSource(this.props);
+  }
+
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
+    this.createDataSource(nextProps)
     if (nextProps.profile.userGroup.credit) {
       this.setState({ userCredit: nextProps.profile.userGroup.credit})
     }
@@ -50,6 +60,18 @@ class Profile extends Component {
       )
       this.props.resetMessage()
     }
+    this.props.getUserGroup()
+  }
+
+  createDataSource({ products }) {
+    const ds = new ListView.DataSource({
+      rowHasChanged: (r1, r2) => r1 !== r2
+    });
+    this.dataSource = ds.cloneWithRows(products);
+  }
+
+  renderRow(product) {
+    return <PurchasedItem product={product} />;
   }
 
   reloadCreditPromptHelper() {
@@ -61,7 +83,6 @@ class Profile extends Component {
   }
 
   reloadCreditHelper(amount) {
-    console.log(this.props.profile.userGroup.credit);
     const totalAmount = this.props.profile.userGroup.credit + _.toInteger(amount);
     this.props.reloadCredit(totalAmount)
   }
@@ -70,12 +91,15 @@ class Profile extends Component {
   renderAdminButton() {
     if (this.props.profile.userType === 'Admin') {
       return (
-        <ActionButton buttonColor="#808080" offsetX={0} offsetY={0} icon={equalizer}>
+        <ActionButton buttonColor="#808080" offsetX={0} offsetY={0} icon={apps}>
           <ActionButton.Item buttonColor='#FF4500' title="Add Product" onPress={() => Actions.addProduct()}>
             {add}
           </ActionButton.Item>
           <ActionButton.Item buttonColor='#00BFFF' title="Manage Product" onPress={() => Actions.manageProduct()}>
             {storage}
+          </ActionButton.Item>
+          <ActionButton.Item buttonColor='#8B4513' title="Performance" onPress={() => Actions.performance()}>
+            {performance}
           </ActionButton.Item>
           <ActionButton.Item buttonColor='#FFD700' title="Reload Credit" onPress={() => this.reloadCreditPromptHelper()}>
             {money}
@@ -87,7 +111,7 @@ class Profile extends Component {
       )
     } else {
       return (
-        <ActionButton buttonColor="#808080" offsetX={0} offsetY={0} icon={equalizer}>
+        <ActionButton buttonColor="#808080" offsetX={0} offsetY={0} icon={apps}>
           <ActionButton.Item buttonColor='#FFD700' title="Reload Credit" onPress={() => Actions.addProduct()}>
             {money}
           </ActionButton.Item>
@@ -100,15 +124,34 @@ class Profile extends Component {
   }
 
   render() {
-    const { skeleton, skeletonBlue, centerEverything, container, profileContainer, contentContainer,
-    titleStyle,titleSmallStyle, basketStatusContainer, basketStatusText } = styles;
+    const { skeleton, skeletonBlue, centerEverything, container, titleContainer, descContainer, title, desc,
+      profileContainer, contentContainer, listViewContainer, titleStyle,titleSmallStyle, basketStatusContainer, basketStatusText } = styles;
     return(
       <View style={[centerEverything, container]}>
         <View style={[profileContainer, centerEverything]}>
-
+          <View style={titleContainer}>
+            <Text style={[title]}>Purchased Item</Text>
+          </View>
+          <View style={descContainer}>
+            <Text style={[desc]}>Here's all your product</Text>
+            <Text style={[desc]}>Tap to load</Text>
+          </View>
         </View>
         <View style={[contentContainer]}>
-
+          <ListView
+            contentContainerStyle={listViewContainer}
+            enableEmptySections
+            dataSource={this.dataSource}
+            renderRow={this.renderRow}
+            refreshControl={
+              <RefreshControl
+                refreshing={this.state.isRefreshing}
+                onRefresh={this.onRefresh}
+                title="Loading data..."
+                progressBackgroundColor="#ffff00"
+              />
+            }
+          />
         </View>
         <LinearGradient
           colors={['#f49542', '#ffd34f']}
@@ -149,8 +192,35 @@ const styles = {
     flex: 2,
     flexDirection: 'column',
   },
+  titleContainer: {
+    width: deviceWidth*0.8,
+  },
+  descContainer: {
+    width: deviceWidth*0.6,
+  },
+  title: {
+    fontSize: 22,
+    fontFamily: 'Helvetica Neue',
+    fontWeight: '400',
+    textAlign: 'center'
+  },
+  desc: {
+    color: 'grey',
+    fontSize: 15,
+    fontFamily: 'Helvetica Neue',
+    fontWeight: '300',
+    textAlign: 'center'
+  },
   contentContainer: {
-    flex: 8
+    flex: 8,
+    width: deviceWidth,
+    marginBottom: 50
+  },
+  listViewContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
   titleStyle: {
     fontSize: 20,
@@ -184,7 +254,20 @@ const styles = {
 }
 
 const mapStateToProps = (state) => {
+  var products = []
+
+  if (state.profile.userGroup.purchasedItem) {
+    let unfilteredPurchasedItem = state.profile.userGroup.purchasedItem
+    let productList = state.api.productList
+
+    //do matching between the entire product list and purchasedItem from user node
+    Object.keys(productList).forEach(
+      (key) => unfilteredPurchasedItem[key] && (products.push({ ...productList[key] }))
+    )
+  }
+
   return {
+    products: products,
     profile: state.profile
   };
 };
