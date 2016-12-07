@@ -177,7 +177,7 @@ class Basket extends Component {
           </View>
         </LinearGradient>
         <ActionButton
-          buttonColor="rgb(101, 14, 249)"
+          buttonColor="#808080"
           offsetX={0}
           offsetY={0}
           icon={creditCard}

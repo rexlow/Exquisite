@@ -16,6 +16,7 @@ import ActionButton from 'react-native-action-button';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 const purchased = (<MaterialIcon name="filter-vintage" size={33} color="white" />)
 const basket = (<MaterialIcon name="shopping-basket" size={33} color="white" />)
+const redeem = (<MaterialIcon name="redeem" size={33} color="white" />)
 
 import { Spinner } from './../../components/common';
 import ProductItem from './../../components/ProductItem';
@@ -71,11 +72,11 @@ class Home extends Component {
             />
           }
         />
-        <ActionButton buttonColor="#e74c3c" offsetX={0} offsetY={0}>
-          <ActionButton.Item buttonColor='#f442cb' title="View Purchased Item" onPress={() => Actions.purchasedItem()}>
+        <ActionButton buttonColor="#1E90FF" offsetX={0} offsetY={0} icon={redeem}>
+          <ActionButton.Item buttonColor='#FF69B4' title="View Purchased Item" onPress={() => Actions.purchasedItem()}>
             {purchased}
           </ActionButton.Item>
-          <ActionButton.Item buttonColor='#9b59b6' title="My basket" onPress={() => Actions.basket()}>
+          <ActionButton.Item buttonColor='#7B68EE' title="My basket" onPress={() => Actions.basket()}>
             {basket}
           </ActionButton.Item>
         </ActionButton>

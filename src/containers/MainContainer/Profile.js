@@ -70,28 +70,28 @@ class Profile extends Component {
   renderAdminButton() {
     if (this.props.profile.userType === 'Admin') {
       return (
-        <ActionButton buttonColor="#3881f7" offsetX={0} offsetY={0} icon={equalizer}>
-          <ActionButton.Item buttonColor='#9b59b6' title="Add Product" onPress={() => Actions.addProduct()}>
+        <ActionButton buttonColor="#808080" offsetX={0} offsetY={0} icon={equalizer}>
+          <ActionButton.Item buttonColor='#FF4500' title="Add Product" onPress={() => Actions.addProduct()}>
             {add}
           </ActionButton.Item>
-          <ActionButton.Item buttonColor='#2b78ff' title="Manage Product" onPress={() => Actions.manageProduct()}>
+          <ActionButton.Item buttonColor='#00BFFF' title="Manage Product" onPress={() => Actions.manageProduct()}>
             {storage}
           </ActionButton.Item>
-          <ActionButton.Item buttonColor='orange' title="Reload Credit" onPress={() => this.reloadCreditPromptHelper()}>
+          <ActionButton.Item buttonColor='#FFD700' title="Reload Credit" onPress={() => this.reloadCreditPromptHelper()}>
             {money}
           </ActionButton.Item>
-          <ActionButton.Item buttonColor='orange' title="Edit Profile" onPress={() => Actions.editProfile()}>
+          <ActionButton.Item buttonColor='#9ACD32' title="Edit Profile" onPress={() => Actions.editProfile()}>
             {account}
           </ActionButton.Item>
         </ActionButton>
       )
     } else {
       return (
-        <ActionButton buttonColor="#3881f7" offsetX={0} offsetY={0} icon={equalizer}>
-          <ActionButton.Item buttonColor='orange' title="Reload Credit" onPress={() => Actions.addProduct()}>
+        <ActionButton buttonColor="#808080" offsetX={0} offsetY={0} icon={equalizer}>
+          <ActionButton.Item buttonColor='#FFD700' title="Reload Credit" onPress={() => Actions.addProduct()}>
             {money}
           </ActionButton.Item>
-          <ActionButton.Item buttonColor='orange' title="Edit Profile" onPress={() => Actions.editProfile()}>
+          <ActionButton.Item buttonColor='#9ACD32' title="Edit Profile" onPress={() => Actions.editProfile()}>
             {account}
           </ActionButton.Item>
         </ActionButton>
