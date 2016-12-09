@@ -83,7 +83,7 @@ class ManageProductItem extends Component {
             <View style={[buttonContainer]}>
               {this.renderApproveButton()}
               <View>
-                <TouchableWithoutFeedback>
+                <TouchableWithoutFeedback onPress={() => this.deleteProductHelper()}>
                   {close}
                 </TouchableWithoutFeedback>
               </View>

@@ -21,6 +21,7 @@ class SplashScreen extends Component {
   }
 
   componentDidMount() {
+    console.log(this.props);
     this.processAuth(this.props);
   }
 

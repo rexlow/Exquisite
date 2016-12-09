@@ -62,9 +62,9 @@ const styles = {
     backgroundColor: 'transparent'
   },
   boldText: {
-    fontSize: 36,
+    fontSize: 32,
     fontFamily: 'HelveticaNeue-Light',
-    letterSpacing: 9,
+    letterSpacing: 8,
     color: 'white'
   },
   backgroundImage: {
