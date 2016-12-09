@@ -13,52 +13,67 @@ import * as actions from './../../actions';
 import ManageProductItem from './../../components/ManageProductItem';
 import PerformanceItem from './../../components/PerformanceItem';
 
+import LinearGradient from 'react-native-linear-gradient';
+const gradient = {
+  gradientStart: [0.3, 1],
+  gradientEnd: [1, 0.8]
+}
+
 const deviceWidth = require('Dimensions').get('window').width;
 const deviceHeight = require('Dimensions').get('window').height;
 
 class Performance extends Component {
 
-  state = { isRefreshing: false }
+  state = { isRefreshing: false, leadingItem: '' }
 
   componentWillMount() {
     this.createDataSource(this.props);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.admin.adminMessage !== null) {
-      Alert.alert('Successful', nextProps.admin.adminMessage)
-      this.createDataSource(this.props)
-      this.props.resetApproveMessage();
-    }
+  componentDidMount() {
+    this.findLeadingItem(this.props)
   }
 
-  createDataSource({ retailersPerformance }) {
+  componentWillReceiveProps(nextProps) {
+    this.createDataSource(nextProps)
+    this.findLeadingItem(nextProps)
+  }
+
+  createDataSource({ sortRetailersPerformance }) {
     const ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2
     });
-    this.dataSource = ds.cloneWithRows(retailersPerformance);
+    this.dataSource = ds.cloneWithRows(sortRetailersPerformance);
   }
 
   renderRow(item) {
     return <PerformanceItem item={item} />;
   }
 
-  onRefresh = () => {
-    this.setState({ isRefreshing: true });
-    this.props.pullProductData()
+  findLeadingItem(data) {
+    this.setState({
+      leadingItem: data.sortRetailersPerformance[0].brand
+    })
   }
 
   render() {
     const { centerEverything, container, listContainer, listViewContainer, skeleton, textContainer,
-    descContainer, desc } = styles;
+    titleContainer, descContainer, titleBar, titleBarText, title, desc, basketStatusContainer, basketStatusText } = styles;
     return(
-      <View style={[centerEverything, container]}>
+      <View style={[container]}>
         <View style={[centerEverything, textContainer]}>
+          <View style={titleContainer}>
+            <Text style={[title]}>Performance</Text>
+          </View>
           <View style={descContainer}>
             <Text style={[desc]}>How do the retailers perform?</Text>
           </View>
         </View>
         <View style={[listContainer]}>
+          <View style={[titleBar]}>
+            <Text style={titleBarText}>Retailer</Text>
+            <Text style={titleBarText}>Item Sold</Text>
+          </View>
           <ListView
             contentContainerStyle={listViewContainer}
             enableEmptySections
@@ -66,6 +81,15 @@ class Performance extends Component {
             renderRow={this.renderRow}
           />
         </View>
+        <LinearGradient
+          colors={['#f49542', '#ffd34f']}
+          start={gradient.gradientStart}
+          end={gradient.gradientEnd}
+          style={basketStatusContainer}>
+          <View>
+            <Text style={basketStatusText}>{this.state.leadingItem} is the best seller!</Text>
+          </View>
+        </LinearGradient>
       </View>
     )
   }
@@ -83,12 +107,10 @@ const styles = {
   listContainer: {
     flex: 9,
     padding: 12,
+    marginBottom: 50
   },
   listViewContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+    paddingTop: 20
   },
   skeleton: {
     borderWidth: 1,
@@ -97,16 +119,49 @@ const styles = {
   textContainer: {
     flex: 1
   },
+  titleContainer: {
+    width: deviceWidth*0.8,
+  },
   descContainer: {
     width: deviceWidth*0.8,
   },
-  desc: {
-    color: 'grey',
-    fontSize: 20,
+  titleBar: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  titleBarText: {
+    fontSize: 16,
+    fontWeight: '500'
+  },
+  title: {
+    fontSize: 22,
     fontFamily: 'Helvetica Neue',
     fontWeight: '400',
     textAlign: 'center'
   },
+  desc: {
+    color: 'grey',
+    fontSize: 18,
+    fontFamily: 'Helvetica Neue',
+    fontWeight: '300',
+    textAlign: 'center'
+  },
+  basketStatusContainer: {
+    position: 'absolute',
+    bottom: 0,
+    width: deviceWidth,
+    height: 50,
+    // backgroundColor: '#221F1F',
+    justifyContent: 'center'
+  },
+  basketStatusText: {
+    color: 'white',
+    backgroundColor: 'transparent',
+    fontSize: 14,
+    fontFamily: 'Helvetica Neue',
+    paddingLeft: 10,
+    fontWeight: '500'
+  }
 }
 
 const mapStateToProps = (state) => {
@@ -142,11 +197,9 @@ const mapStateToProps = (state) => {
     }
   }
 
-  const products = _.map(state.api.productList, (val, uid) => {
-    return {...val, uid};
-  })
+  const sortRetailersPerformance = _.orderBy(retailersPerformance, ['count'], ['desc'])
 
-  return { retailersPerformance, admin: state.admin };
+  return { sortRetailersPerformance, admin: state.admin };
 }
 
 export default connect(mapStateToProps, actions)(Performance);

@@ -125,7 +125,8 @@ class Profile extends Component {
 
   render() {
     const { skeleton, skeletonBlue, centerEverything, container, titleContainer, descContainer, title, desc,
-      profileContainer, contentContainer, listViewContainer, titleStyle,titleSmallStyle, basketStatusContainer, basketStatusText } = styles;
+      profileContainer, contentContainer, listViewContainer, titleStyle,titleSmallStyle,
+      basketStatusContainer, basketStatusText } = styles;
     return(
       <View style={[centerEverything, container]}>
         <View style={[profileContainer, centerEverything]}>
@@ -157,7 +158,7 @@ class Profile extends Component {
           colors={['#f49542', '#ffd34f']}
           start={gradient.gradientStart}
           end={gradient.gradientEnd}
-          style={styles.basketStatusContainer}>
+          style={basketStatusContainer}>
           <View>
             <Text style={basketStatusText}>Hello {this.props.profile.userGroup.firstName} {this.props.profile.userGroup.lastName}</Text>
             <Text style={basketStatusText}>Credit Available: RM {this.state.userCredit}</Text>

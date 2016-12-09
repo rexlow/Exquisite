@@ -22,13 +22,12 @@ class PerformanceItem extends Component {
 
   getWidth(data) {
     const maxWidth = deviceWidth*0.8;
-    const widthFactor = maxWidth/100;
+    const widthFactor = maxWidth/20;
     const width = data*widthFactor;
     return width;
   }
 
   render() {
-    console.log(this.props.item);
     const { pts } = this.state;
     const { title, value } = this.props.item;
     const { skeleton, item , label, data, bar, points} = styles;
@@ -39,7 +38,7 @@ class PerformanceItem extends Component {
             {pts &&
               <Animated.View style={[bar, points, {width: pts}]} />
             }
-            <Text>{this.props.item.count} %</Text>
+            <Text>{this.props.item.count}</Text>
           </View>
       </View>
     )
