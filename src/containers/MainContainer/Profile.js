@@ -83,8 +83,21 @@ class Profile extends Component {
   }
 
   reloadCreditHelper(amount) {
-    const totalAmount = this.props.profile.userGroup.credit + _.toInteger(amount);
-    this.props.reloadCredit(totalAmount)
+    if(parseInt(amount) || parseFloat(amount)) {
+      if(parseInt(amount)) {
+        var newAmount = parseInt(amount)
+      } else {
+        var newAmount = parseFloat(amount)
+      }
+      const totalAmount = this.props.profile.userGroup.credit + _.toInteger(amount);
+      this.props.reloadCredit(totalAmount)
+    } else {
+        Alert.alert(
+          'Alert',
+          'Please enter a valid value'
+        )
+    }
+
   }
 
   //only admin can add product
